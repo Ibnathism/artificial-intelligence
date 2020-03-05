@@ -60,7 +60,7 @@ public class Functions {
         return init;
     }
 
-    public static int[][] buildIntMatrix(Pair[][] pairMatrix){
+    public static int[][] getIntMatrix(Pair[][] pairMatrix){
         int[][] ans = new int[pairMatrix.length][pairMatrix.length];
         for (int i = 0; i < pairMatrix.length; i++) {
             for (int j = 0; j < pairMatrix.length; j++) {
@@ -68,5 +68,16 @@ public class Functions {
             }
         }
         return ans;
+    }
+
+    public static Pair[][] copyPairArray(Pair[][] state) {
+        Pair[][] temp = new Pair[rootN][rootN];
+        for (int i = 0; i < state.length; i++) {
+            for (int j = 0; j < state.length; j++) {
+                Pair p = new Pair(state[i][j].getIndex(), state[i][j].getValue());
+                temp[i][j] = p;
+            }
+        }
+        return temp;
     }
 }
