@@ -41,7 +41,9 @@ public class Functions {
         int k = 1;
         for (int i = 0; i < matrix.length; i++) {
             for (int j = 0; j < matrix.length; j++) {
-                Pair temp = new Pair(k, matrix[i][j]);
+                Pair temp;
+                if (k==n) k=0;
+                temp = new Pair(k, matrix[i][j]);
                 k++;
                 ans[i][j] = temp;
             }
@@ -60,11 +62,31 @@ public class Functions {
         return init;
     }
 
-    public static int[][] getIntMatrix(Pair[][] pairMatrix){
+    public static int[][] getIntValueMatrix(Pair[][] pairMatrix){
         int[][] ans = new int[pairMatrix.length][pairMatrix.length];
         for (int i = 0; i < pairMatrix.length; i++) {
             for (int j = 0; j < pairMatrix.length; j++) {
                 ans[i][j] = pairMatrix[i][j].getValue();
+            }
+        }
+        return ans;
+    }
+
+    public static void printState(Pair[][] state){
+        for (int i = 0; i < state.length; i++) {
+            for (int j = 0; j < state.length; j++) {
+                System.out.print(state[i][j].getValue() + "\t" );
+            }
+            System.out.println();
+        }
+        System.out.println();
+    }
+
+    public static int[][] getIntIndexMatrix(Pair[][] pairMatrix){
+        int[][] ans = new int[pairMatrix.length][pairMatrix.length];
+        for (int i = 0; i < pairMatrix.length; i++) {
+            for (int j = 0; j < pairMatrix.length; j++) {
+                ans[i][j] = pairMatrix[i][j].getIndex();
             }
         }
         return ans;

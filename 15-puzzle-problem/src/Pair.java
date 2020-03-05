@@ -25,9 +25,6 @@ public class Pair {
 
     @Override
     public String toString() {
-        return "Pair{" +
-                "index=" + index +
-                ", value=" + value +
-                '}';
+        return "("+ this.getIndex()+","+this.getValue()+")";
     }
 }

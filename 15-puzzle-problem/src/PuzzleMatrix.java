@@ -1,16 +1,26 @@
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 public class PuzzleMatrix {
     private Pair[][] state;
     private Pair[][] goalState;
     private PuzzleMatrix previous;
+    private int nodesTraversed;
     private final int n = 16;
     private final int rootN = (int) Math.sqrt(n);
 
     public PuzzleMatrix(Pair[][] state, Pair[][] goalState) {
         this.state = state;
         this.goalState = goalState;
+    }
+
+    public PuzzleMatrix(Pair[][] state, Pair[][] goalState, PuzzleMatrix previous, int nodesTraversed) {
+        this.state = state;
+        this.goalState = goalState;
+        this.previous = previous;
+        this.nodesTraversed = nodesTraversed;
     }
 
     public Pair[][] getState() {
@@ -24,8 +34,24 @@ public class PuzzleMatrix {
     @Override
     public String toString() {
         return "PuzzleMatrix{" +
-                "matrix=" + Arrays.toString(state) +
+                "state=" + Arrays.toString(state) +
                 '}';
+    }
+
+    public PuzzleMatrix getPrevious() {
+        return previous;
+    }
+
+    public void setPrevious(PuzzleMatrix previous) {
+        this.previous = previous;
+    }
+
+    public int getNodesTraversed() {
+        return nodesTraversed;
+    }
+
+    public void setNodesTraversed(int nodesTraversed) {
+        this.nodesTraversed = nodesTraversed;
     }
 
     public int countMisplaced(){
@@ -60,42 +86,70 @@ public class PuzzleMatrix {
         return manSum;
     }
 
-    private Pair[][] moveBlank(Pair[][] temp, int previ, int prevj, int newi, int newj){
-        int a = temp[previ][prevj].getIndex();
-        temp[previ][prevj].setIndex(temp[newi][newj].getIndex());
-        temp[newi][newj].setIndex(a);
-        return temp;
+
+    public boolean isGoalReached(){
+        for (int i = 0; i < rootN; i++) {
+            for (int j = 0; j < rootN; j++) {
+                if (goalState[i][j].getIndex() != this.state[i][j].getIndex()) return false;
+            }
+        }
+        return true;
     }
 
 
 
 
-    public ArrayList<PuzzleMatrix> changeState(){
-        ArrayList<PuzzleMatrix> puzzleMatrixArrayList = new ArrayList<>();
+    public List<PuzzleMatrix> possibleStates(){
+        List<PuzzleMatrix> puzzleMatrixArrayList = new ArrayList<>();
         Pair[][] myPair = Functions.copyPairArray(this.state);
+        int temp;
+        int[][] mat = Functions.getIntIndexMatrix(state);
+
+        PuzzleMatrix puzzleMatrix;
+        int a;
         int size = state.length;
         for (int i = 0; i < rootN; i++) {
             for (int j = 0; j < rootN; j++) {
                 if (myPair[i][j].getIndex() == 0){
                     if (i-1>=0){
-                        moveBlank(myPair, i, j, i-1, j);
-                        puzzleMatrixArrayList.add(new PuzzleMatrix(myPair, goalState));
-                        moveBlank(myPair, i, j, i-1, j);
+                        temp = mat[i][j];
+                        mat[i][j] = mat[i-1][j];
+                        mat[i-1][j] = temp;
+                        puzzleMatrix = new PuzzleMatrix(Functions.buildInitialMatrix(mat), goalState);
+                        puzzleMatrixArrayList.add(puzzleMatrix);
+                        temp = mat[i][j];
+                        mat[i][j] = mat[i-1][j];
+                        mat[i-1][j] = temp;
                     }
                     if (i+1<size){
-                        moveBlank(myPair, i, j, i+1, j);
-                        puzzleMatrixArrayList.add(new PuzzleMatrix(myPair, goalState));
-                        moveBlank(myPair, i, j, i+1, j);
+                        temp = mat[i][j];
+                        mat[i][j] = mat[i+1][j];
+                        mat[i+1][j] = temp;
+                        puzzleMatrix = new PuzzleMatrix(Functions.buildInitialMatrix(mat), goalState);
+                        puzzleMatrixArrayList.add(puzzleMatrix);
+                        temp = mat[i][j];
+                        mat[i][j] = mat[i+1][j];
+                        mat[i+1][j] = temp;
                     }
                     if (j-1>=0){
-                        moveBlank(myPair, i, j, i, j-1);
-                        puzzleMatrixArrayList.add(new PuzzleMatrix(myPair, goalState));
-                        moveBlank(myPair, i, j, i, j-1);
+                        temp = mat[i][j];
+                        mat[i][j] = mat[i][j-1];
+                        mat[i][j-1] = temp;
+                        puzzleMatrix = new PuzzleMatrix(Functions.buildInitialMatrix(mat), goalState);
+                        puzzleMatrixArrayList.add(puzzleMatrix);
+                        temp = mat[i][j];
+                        mat[i][j] = mat[i][j-1];
+                        mat[i][j-1] = temp;
                     }
                     if (j+1<size){
-                        moveBlank(myPair, i, j, i, j+1);
-                        puzzleMatrixArrayList.add(new PuzzleMatrix(myPair, goalState));
-                        moveBlank(myPair, i, j, i, j+1);
+                        temp = mat[i][j];
+                        mat[i][j] = mat[i][j+1];
+                        mat[i][j+1] = temp;
+                        puzzleMatrix = new PuzzleMatrix(Functions.buildInitialMatrix(mat), goalState);
+                        puzzleMatrixArrayList.add(puzzleMatrix);
+                        temp = mat[i][j];
+                        mat[i][j] = mat[i][j+1];
+                        mat[i][j+1] = temp;
                     }
                 }
             }
