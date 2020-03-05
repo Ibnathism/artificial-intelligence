@@ -11,9 +11,13 @@ public class PuzzleProblem {
         int[][] goal = {{1, 2, 3, 4}, {5, 6, 7, 8}, {9, 10, 11, 12}, {13, 14, 15, 0}};
         int[][] anishaSample1goal = {{1, 2, 3, 4}, {5, 6, 7, 8}, {9, 10, 11, 13}, {12, 15, 14, 0}};
         int[][] x = {{2, 1, 4, 11}, {0, 12, 3, 5}, {6, 7, 8, 10}, {9, 14, 13, 15}};
-        Pair[][] initMatrix = Functions.buildInitialMatrix(anishaSample2);
+        int[][] y = {{0,2,3,4},{1,5,7,8},{10,6,11,13},{9,12,15,14}};
+        //Pair[][] initMatrix = Functions.buildInitialMatrix(y);
+        //Pair[][] goalMatrix = Functions.buildGoalMatrix(goal);
         Pair[][] goalMatrix = Functions.buildGoalMatrix(goal);
+        Pair[][] initMatrix = Functions.buildMatrix(y, goal);
         PuzzleMatrix puzzleMatrix = new PuzzleMatrix(initMatrix, goalMatrix);
+
 
         //System.out.println(puzzleMatrix.manhattanSum());
 

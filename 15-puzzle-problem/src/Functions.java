@@ -62,6 +62,28 @@ public class Functions {
         return init;
     }
 
+    public static Pair[][] buildMatrix(int[][] matrix, int[][] finalMat){
+        Pair[][] finalPair = Functions.buildGoalMatrix(finalMat);
+        Pair[][] init = new Pair[matrix.length][matrix.length];
+
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix.length; j++) {
+                Pair temp = new Pair(Functions.getIndexFromValue(finalPair, matrix[i][j]), matrix[i][j]);
+                init[i][j] = temp;
+            }
+        }
+        return init;
+    }
+
+    private static int getIndexFromValue(Pair[][] finalPair, int value) {
+        for (int i = 0; i < finalPair.length; i++) {
+            for (int j = 0; j < finalPair.length; j++) {
+                if (finalPair[i][j].getValue()==value) return finalPair[i][j].getIndex();
+            }
+        }
+        return 0;
+    }
+
     public static int[][] getIntValueMatrix(Pair[][] pairMatrix){
         int[][] ans = new int[pairMatrix.length][pairMatrix.length];
         for (int i = 0; i < pairMatrix.length; i++) {
