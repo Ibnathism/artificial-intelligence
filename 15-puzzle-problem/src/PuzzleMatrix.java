@@ -40,6 +40,19 @@ public class PuzzleMatrix {
                 '}';
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        Pair[][] pairs1 = this.state;
+        PuzzleMatrix pm = (PuzzleMatrix) obj;
+        Pair[][] pairs2 = pm.state;
+        for (int i = 0; i < state.length; i++) {
+            for (int j = 0; j < state.length; j++) {
+                if (!pairs1[i][j].equals(pairs2[i][j])) return false;
+            }
+        }
+        return true;
+    }
+
     public PuzzleMatrix getPrevious() {
         return previous;
     }
@@ -122,25 +135,25 @@ public class PuzzleMatrix {
         for (int i = 0; i < rootN; i++) {
             for (int j = 0; j < rootN; j++) {
                 if (myPair[i][j].getIndex() == 0){
-                    if (i-1>=0){
+                    if (i-1>=0){        //up
                         Pair[][] p = this.swap(myPair, myPair[i][j], myPair[i-1][j]);
                         puzzleMatrixArrayList.add(new PuzzleMatrix(p, goalState));
                         myPair = Functions.copyPairArray(this.state);
                     }
-                    if (i+1<size){
+                    if (i+1<size){      //down
 
                         Pair[][] p = this.swap(myPair, myPair[i][j], myPair[i+1][j]);
                         puzzleMatrixArrayList.add(new PuzzleMatrix(p, goalState));
                         myPair = Functions.copyPairArray(this.state);
 
                     }
-                    if (j-1>=0){
+                    if (j-1>=0){        //left
 
                         Pair[][] p = this.swap(myPair, myPair[i][j], myPair[i][j-1]);
                         puzzleMatrixArrayList.add(new PuzzleMatrix(p, goalState));
                         myPair = Functions.copyPairArray(this.state);
                        }
-                    if (j+1<size){
+                    if (j+1<size){      //right
 
                         Pair[][] p = this.swap(myPair, myPair[i][j], myPair[i][j+1]);
                         puzzleMatrixArrayList.add(new PuzzleMatrix(p, goalState));

@@ -15,7 +15,7 @@ public class SearchAStar {
         nonCheckedList.add(puzzleMatrix);
     }
 
-    public PuzzleMatrix search(String type) {
+    public PuzzleMatrix search(int type) {
 
 
 
@@ -27,11 +27,11 @@ public class SearchAStar {
             int position = -1;
             int heuVal;
             for (int i = 0; i<nonCheckedList.size(); i++) {
-                if (type.equals("Misplaced")){
+                if (type==1){
                     heuVal = nonCheckedList.get(i).getNodesTraversed() + nonCheckedList.get(i).countMisplaced();
                     //System.out.println("HeuVal : " + heuVal);
                 }
-                else if (type.equals("Manhattan")) {
+                else if (type==2) {
                     heuVal = nonCheckedList.get(i).getNodesTraversed() + nonCheckedList.get(i).manhattanSum();
                     //System.out.println("HeuVal : " + heuVal);
                 }
