@@ -11,9 +11,11 @@ public class PuzzleMatrix {
     private final int n = 16;
     private final int rootN = (int) Math.sqrt(n);
 
+
     public PuzzleMatrix(Pair[][] state, Pair[][] goalState) {
         this.state = state;
         this.goalState = goalState;
+        nodesTraversed = 0;
     }
 
     public PuzzleMatrix(Pair[][] state, Pair[][] goalState, PuzzleMatrix previous, int nodesTraversed) {
@@ -96,60 +98,54 @@ public class PuzzleMatrix {
         return true;
     }
 
+    private Pair[][] swap(Pair[][] pairs, Pair prev, Pair next){
+        Pair[][] ans = new Pair[pairs.length][pairs.length];
+        for (int i = 0; i < pairs.length; i++) {
+            for (int j = 0; j < pairs.length; j++) {
+                if (pairs[i][j].equals(prev))
+                    ans[i][j] = next;
+                else if (pairs[i][j].equals(next))
+                    ans[i][j] = prev;
+                else ans[i][j] = pairs[i][j];
+            }
+        }
+        return ans;
+    }
+
 
 
 
     public List<PuzzleMatrix> possibleStates(){
         List<PuzzleMatrix> puzzleMatrixArrayList = new ArrayList<>();
         Pair[][] myPair = Functions.copyPairArray(this.state);
-        int temp;
-        int[][] mat = Functions.getIntIndexMatrix(state);
-
-        PuzzleMatrix puzzleMatrix;
-        int a;
-        int size = state.length;
+       int size = state.length;
         for (int i = 0; i < rootN; i++) {
             for (int j = 0; j < rootN; j++) {
                 if (myPair[i][j].getIndex() == 0){
                     if (i-1>=0){
-                        temp = mat[i][j];
-                        mat[i][j] = mat[i-1][j];
-                        mat[i-1][j] = temp;
-                        puzzleMatrix = new PuzzleMatrix(Functions.buildInitialMatrix(mat), goalState);
-                        puzzleMatrixArrayList.add(puzzleMatrix);
-                        temp = mat[i][j];
-                        mat[i][j] = mat[i-1][j];
-                        mat[i-1][j] = temp;
+                        Pair[][] p = this.swap(myPair, myPair[i][j], myPair[i-1][j]);
+                        puzzleMatrixArrayList.add(new PuzzleMatrix(p, goalState));
+                        myPair = Functions.copyPairArray(this.state);
                     }
                     if (i+1<size){
-                        temp = mat[i][j];
-                        mat[i][j] = mat[i+1][j];
-                        mat[i+1][j] = temp;
-                        puzzleMatrix = new PuzzleMatrix(Functions.buildInitialMatrix(mat), goalState);
-                        puzzleMatrixArrayList.add(puzzleMatrix);
-                        temp = mat[i][j];
-                        mat[i][j] = mat[i+1][j];
-                        mat[i+1][j] = temp;
+
+                        Pair[][] p = this.swap(myPair, myPair[i][j], myPair[i+1][j]);
+                        puzzleMatrixArrayList.add(new PuzzleMatrix(p, goalState));
+                        myPair = Functions.copyPairArray(this.state);
+
                     }
                     if (j-1>=0){
-                        temp = mat[i][j];
-                        mat[i][j] = mat[i][j-1];
-                        mat[i][j-1] = temp;
-                        puzzleMatrix = new PuzzleMatrix(Functions.buildInitialMatrix(mat), goalState);
-                        puzzleMatrixArrayList.add(puzzleMatrix);
-                        temp = mat[i][j];
-                        mat[i][j] = mat[i][j-1];
-                        mat[i][j-1] = temp;
-                    }
+
+                        Pair[][] p = this.swap(myPair, myPair[i][j], myPair[i][j-1]);
+                        puzzleMatrixArrayList.add(new PuzzleMatrix(p, goalState));
+                        myPair = Functions.copyPairArray(this.state);
+                       }
                     if (j+1<size){
-                        temp = mat[i][j];
-                        mat[i][j] = mat[i][j+1];
-                        mat[i][j+1] = temp;
-                        puzzleMatrix = new PuzzleMatrix(Functions.buildInitialMatrix(mat), goalState);
-                        puzzleMatrixArrayList.add(puzzleMatrix);
-                        temp = mat[i][j];
-                        mat[i][j] = mat[i][j+1];
-                        mat[i][j+1] = temp;
+
+                        Pair[][] p = this.swap(myPair, myPair[i][j], myPair[i][j+1]);
+                        puzzleMatrixArrayList.add(new PuzzleMatrix(p, goalState));
+                        myPair = Functions.copyPairArray(this.state);
+
                     }
                 }
             }

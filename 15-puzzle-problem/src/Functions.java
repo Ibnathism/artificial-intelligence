@@ -20,8 +20,9 @@ public class Functions {
                 }
             }
         }
-        //System.out.println(inversion);
+        System.out.println("Inversions :" + inversion);
         int blank = Functions.findBlank(state);
+        System.out.println("Blank position "+blank);
         if (inversion%2 == 0)  return blank % 2 != 0;
         else return blank % 2 == 0;
 
@@ -30,7 +31,7 @@ public class Functions {
     private static int findBlank(Pair[][] state){
         for (int i = 0; i < rootN; i++) {
             for (int j = 0; j < rootN; j++) {
-                if (state[i][j].getIndex() == 0) return (i+1) * (j+1) - 1;
+                if (state[i][j].getIndex() == 0) return (4-i);
             }
         }
         return 0;

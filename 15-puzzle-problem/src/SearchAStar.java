@@ -1,9 +1,12 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.PriorityQueue;
 
 public class SearchAStar {
     private List<PuzzleMatrix> checkedList;
     private List<PuzzleMatrix> nonCheckedList;
+
 
 
     public SearchAStar(PuzzleMatrix puzzleMatrix) {
@@ -12,10 +15,14 @@ public class SearchAStar {
         nonCheckedList.add(puzzleMatrix);
     }
 
-    public PuzzleMatrix search(String type){
+    public PuzzleMatrix search(String type) {
+
+
+
+
         while (!nonCheckedList.isEmpty()){
             PuzzleMatrix minMatrix;
-            //TODO:find the min f wala matrix
+            //find the min f wala matrix
             int minimum = Integer.MAX_VALUE;
             int position = -1;
             int heuVal;
@@ -37,26 +44,27 @@ public class SearchAStar {
                     minimum = heuVal;
                 }
             }
-            //System.out.println(nonCheckedList);
             minMatrix = nonCheckedList.get(position);
-            //System.out.println("Found a minMatrix ");
-            //Functions.printState(minMatrix.getState());
-            //TODO:if it is goal, if goal return
+            //if it is goal, if goal return
             if (minMatrix.isGoalReached()) {
                 System.out.println("Goal Reached");
                 System.out.println("Explored Nodes : " + checkedList.size());
                 return minMatrix;
             }
-            //TODO:if not goal push it in checked list removing from non checked list
+            //if not goal push it in checked list removing from non checked list
             checkedList.add(minMatrix);
             nonCheckedList.remove(minMatrix);
-            //TODO:find out its possible states and push them in non checked list
-            List<PuzzleMatrix> possibiles = minMatrix.possibleStates();
-            for (PuzzleMatrix pm: possibiles
+            //nonCheckedList.clear();
+            //System.out.println("Found a minmatrix ");
+            //Functions.printState(minMatrix.getState());
+            //find out its possible states and push them in non checked list
+            List<PuzzleMatrix> possibles = minMatrix.possibleStates();
+            for (PuzzleMatrix pm: possibles
                  ) {
-                if (!checkedList.contains(pm)){
+                if (!checkedList.contains(pm) ){
                     pm.setPrevious(minMatrix);
                     pm.setNodesTraversed(minMatrix.getNodesTraversed()+1);
+
                     if (!nonCheckedList.contains(pm)){
                         nonCheckedList.add(pm);
                     }
@@ -65,4 +73,5 @@ public class SearchAStar {
         }
         return null;
     }
-}
+
+    }

@@ -4,9 +4,15 @@
     <list default="true" id="0194c185-8f56-4ec0-9062-18ed58d0ed96" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/15-puzzle-problem/Functions.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/15-puzzle-problem/Functions.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/15-puzzle-problem/Pair.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/15-puzzle-problem/Pair.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/15-puzzle-problem/PuzzleMatrix.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/15-puzzle-problem/PuzzleMatrix.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/15-puzzle-problem/PuzzleProblem.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/15-puzzle-problem/PuzzleProblem.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/15-puzzle-problem/SearchAStar.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/15-puzzle-problem/SearchAStar.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Functions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Functions.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Pair.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Pair.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/PuzzleMatrix.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PuzzleMatrix.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/PuzzleProblem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PuzzleProblem.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SearchAStar.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/SearchAStar.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -81,7 +87,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1583328053263</updated>
-      <workItem from="1583328058212" duration="43155000" />
+      <workItem from="1583328058212" duration="55543000" />
     </task>
     <servers />
   </component>
@@ -104,13 +110,18 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/SearchAStar.java</url>
-          <line>15</line>
+          <line>22</line>
           <option name="timeStamp" value="11" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/PuzzleMatrix.java</url>
-          <line>110</line>
-          <option name="timeStamp" value="12" />
+          <url>file://$PROJECT_DIR$/src/Functions.java</url>
+          <line>67</line>
+          <option name="timeStamp" value="14" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/Functions.java</url>
+          <line>40</line>
+          <option name="timeStamp" value="15" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
