@@ -36,6 +36,7 @@ public class PuzzleProblem {
                 PuzzleMatrix puzzleMatrix = new PuzzleMatrix(initMatrix, goalMatrix);
                 SearchAStar aStar = new SearchAStar(puzzleMatrix);
                 Stack<PuzzleMatrix> stack = new Stack<>();
+                Stack<String> moves = new Stack<>();
                 System.out.println("Given ");
                 for (int i = 0; i < initial.length; i++) {
                     for (int j = 0; j < initial.length; j++) {
@@ -53,6 +54,7 @@ public class PuzzleProblem {
                     while (finalMatrix.getPrevious() != null) {
                         //Functions.printState(finalMatrix.getState());
                         stack.push(finalMatrix);
+                        moves.push(finalMatrix.getMymove());
                         finalMatrix = finalMatrix.getPrevious();
                         pathCount++;
 
@@ -64,6 +66,10 @@ public class PuzzleProblem {
                         Functions.printState(stack.pop().getState());
                     }
                     System.out.println("Path : "+pathCount);
+                    System.out.print("Moves : ");
+                    while (!moves.empty()){
+                        System.out.print(moves.pop());
+                    }
                 }
                 else System.out.println("not solvable");
             }
