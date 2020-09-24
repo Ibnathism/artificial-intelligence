@@ -1,13 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="0194c185-8f56-4ec0-9062-18ed58d0ed96" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/project-template.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/project-template.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/15-puzzle-problem.iml" beforeDir="false" afterPath="$PROJECT_DIR$/15-puzzle-problem.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/input.txt" beforeDir="false" afterPath="$PROJECT_DIR$/input.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/15-puzzle-problem/Functions.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/15-puzzle-problem/Functions.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/15-puzzle-problem/Pair.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/15-puzzle-problem/Pair.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/15-puzzle-problem/PuzzleMatrix.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/15-puzzle-problem/PuzzleMatrix.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/15-puzzle-problem/PuzzleProblem.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/15-puzzle-problem/PuzzleProblem.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/15-puzzle-problem/SearchAStar.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/15-puzzle-problem/SearchAStar.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Functions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Functions.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Pair.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Pair.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/PuzzleMatrix.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PuzzleMatrix.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/PuzzleProblem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PuzzleProblem.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SearchAStar.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/SearchAStar.java" afterDir="false" />
     </list>
-    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -25,28 +57,26 @@
   </component>
   <component name="ProjectId" id="1YfK8y1AbGcryd52StZBSm9uC1u" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
   <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.0" />
+    <property name="settings.editor.selected.configurable" value="reference.projectsettings.compiler.javacompiler" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="E:\Workspaces\IntelliJ\Artificial-Intelligence\15-puzzle-problem" />
       <recent name="E:\Workspaces\IntelliJ\Artificial-Intelligence\15-puzzle-problem\src" />
     </key>
-  </component>
-  <component name="RunDashboard">
-    <option name="ruleStates">
-      <list>
-        <RuleState>
-          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
-        </RuleState>
-        <RuleState>
-          <option name="name" value="StatusDashboardGroupingRule" />
-        </RuleState>
-      </list>
-    </option>
   </component>
   <component name="RunManager" selected="Application.PuzzleProblem">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true">
@@ -76,6 +106,7 @@
       </list>
     </recent_temporary>
   </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -88,25 +119,56 @@
       <updated>1583328053263</updated>
       <workItem from="1583328058212" duration="55592000" />
       <workItem from="1583481727809" duration="13196000" />
-      <workItem from="1583577573284" duration="1785000" />
+      <workItem from="1583577573284" duration="2062000" />
+      <workItem from="1600976687395" duration="223000" />
+      <workItem from="1600977183755" duration="668000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="1" />
+    <option name="version" value="3" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
       <map>
         <entry key="MAIN">
           <value>
-            <State>
-              <option name="COLUMN_ORDER" />
-            </State>
+            <State />
           </value>
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="520" y="294" width="424" height="514" key="FileChooserDialogImpl" timestamp="1600977788849">
+      <screen x="0" y="27" width="1920" height="1053" />
+    </state>
+    <state x="520" y="294" width="424" height="514" key="FileChooserDialogImpl/0.27.1920.1053@0.27.1920.1053" timestamp="1600977788849" />
+    <state width="1354" height="618" key="GridCell.Tab.0.bottom" timestamp="1600977853921">
+      <screen x="0" y="27" width="1920" height="1053" />
+    </state>
+    <state width="1354" height="618" key="GridCell.Tab.0.bottom/0.27.1920.1053@0.27.1920.1053" timestamp="1600977853921" />
+    <state width="1354" height="618" key="GridCell.Tab.0.center" timestamp="1600977853921">
+      <screen x="0" y="27" width="1920" height="1053" />
+    </state>
+    <state width="1354" height="618" key="GridCell.Tab.0.center/0.27.1920.1053@0.27.1920.1053" timestamp="1600977853921" />
+    <state width="1354" height="618" key="GridCell.Tab.0.left" timestamp="1600977853920">
+      <screen x="0" y="27" width="1920" height="1053" />
+    </state>
+    <state width="1354" height="618" key="GridCell.Tab.0.left/0.27.1920.1053@0.27.1920.1053" timestamp="1600977853920" />
+    <state width="1354" height="618" key="GridCell.Tab.0.right" timestamp="1600977853921">
+      <screen x="0" y="27" width="1920" height="1053" />
+    </state>
+    <state width="1354" height="618" key="GridCell.Tab.0.right/0.27.1920.1053@0.27.1920.1053" timestamp="1600977853921" />
+    <state x="118" y="124" width="1024" height="845" key="SettingsEditor" timestamp="1600977720676">
+      <screen x="0" y="27" width="1920" height="1053" />
+    </state>
+    <state x="118" y="124" width="1024" height="845" key="SettingsEditor/0.27.1920.1053@0.27.1920.1053" timestamp="1600977720676" />
+    <state x="0" y="146" width="1474" height="810" key="new project wizard" timestamp="1600977850135">
+      <screen x="0" y="27" width="1920" height="1053" />
+    </state>
+    <state x="0" y="146" width="1474" height="810" key="new project wizard/0.27.1920.1053@0.27.1920.1053" timestamp="1600977850135" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
