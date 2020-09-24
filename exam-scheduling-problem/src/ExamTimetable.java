@@ -3,12 +3,10 @@ import java.io.File;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 public class ExamTimetable {
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        BufferedReader bufferedReader = null;
+        BufferedReader bufferedReader;
 
         String courseFileName = "yor-f-83.crs";
         String studentFileName = "yor-f-83.stu";
@@ -25,12 +23,11 @@ public class ExamTimetable {
                 courseList.add(course);
                 str = bufferedReader.readLine();
             }
-            //System.out.println(courses.get(3).getNumberOfStudents());
+            System.out.println(courseList.get(3).getNumberOfStudents());
 
-            //System.out.println(str);
 
             File studentFile = new File(studentFileName);
-            bufferedReader = new BufferedReader(new FileReader(studentFileName));
+            bufferedReader = new BufferedReader(new FileReader(studentFile));
             str = bufferedReader.readLine();
             List<Student> studentList = new ArrayList<>();
             while (str!=null) {
@@ -46,7 +43,7 @@ public class ExamTimetable {
                 str = bufferedReader.readLine();
             }
 
-            //System.out.println(studentList.get(3).getMyCourses().get(0).getValue());
+            System.out.println(studentList.get(3).getMyCourses().get(0).getValue());
 
             File solutionFile = new File(solutionFileName);
             bufferedReader = new BufferedReader(new FileReader(solutionFile));
@@ -59,7 +56,7 @@ public class ExamTimetable {
                 str = bufferedReader.readLine();
             }
 
-            //System.out.println(solutionList.get(3).getCourseNumber());
+            System.out.println(solutionList.get(3).getCourseNumber());
 
         } catch (Exception e) {
             e.printStackTrace();
