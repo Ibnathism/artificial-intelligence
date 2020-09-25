@@ -1,17 +1,29 @@
 public class Course {
-    private int value;
+    private String value;
     private int numberOfStudents;
+    private boolean isAddedToGraph;
 
-    public Course(int value, int numberOfStudents) {
+    public Course(String value, int numberOfStudents, boolean isAddedToGraph) {
         this.value = value;
         this.numberOfStudents = numberOfStudents;
+        this.isAddedToGraph = isAddedToGraph;
     }
 
-    public Course(int value) {
+    public Course(String value) {
         this.value = value;
     }
 
-    public int getValue() {
+    public boolean isAddedToGraph() {
+        return isAddedToGraph;
+    }
+
+    public void setAddedToGraph(boolean addedToGraph) {
+        isAddedToGraph = addedToGraph;
+    }
+
+
+
+    public String getValue() {
         return value;
     }
 
@@ -19,7 +31,7 @@ public class Course {
         return numberOfStudents;
     }
 
-    public void setValue(int value) {
+    public void setValue(String value) {
         this.value = value;
     }
 

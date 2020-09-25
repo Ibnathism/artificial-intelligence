@@ -19,16 +19,7 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0194c185-8f56-4ec0-9062-18ed58d0ed96" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../exam-scheduling-problem/src/ExamTimetable.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../exam-scheduling-problem/yor-f-83.crs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../exam-scheduling-problem/yor-f-83.stu" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../exam-scheduling-problem/yor83.sol" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/PuzzleProblem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PuzzleProblem.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../exam-scheduling-problem/out/production/exam-scheduling-problem/com/company/Main.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../exam-scheduling-problem/src/com/company/Main.java" beforeDir="false" />
-    </list>
+    <list default="true" id="0194c185-8f56-4ec0-9062-18ed58d0ed96" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -122,7 +113,7 @@
       <workItem from="1583577573284" duration="2062000" />
       <workItem from="1600976687395" duration="223000" />
       <workItem from="1600977183755" duration="668000" />
-      <workItem from="1600978239366" duration="1921000" />
+      <workItem from="1600978239366" duration="2246000" />
     </task>
     <servers />
   </component>
