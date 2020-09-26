@@ -93,9 +93,24 @@ public class ExamTimetable {
     }
 
     public static void main(String[] args) {
-        Graph graph = ExamTimetable.initialize("yor-f-83.crs", "yor-f-83.stu");
-        int numberOfColors = graph.colorGraph();
-        //ExamTimetable.colorGraph(graph);
+
+        Graph graph1 = ExamTimetable.initialize("car-s-91.crs", "car-s-91.stu");
+        Graph graph2 = ExamTimetable.initialize("car-f-92.crs", "car-f-92.stu");
+        Graph graph3 = ExamTimetable.initialize("kfu-s-93.crs", "kfu-s-93.stu");
+        Graph graph4 = ExamTimetable.initialize("tre-s-92.crs", "tre-s-92.stu");
+        Graph graph5 = ExamTimetable.initialize("yor-f-83.crs", "yor-f-83.stu");
+        int numberOfColors1 = graph1.colorGraph();
+        int numberOfColors2 = graph2.colorGraph();
+        int numberOfColors3 = graph3.colorGraph();
+        int numberOfColors4 = graph4.colorGraph();
+        int numberOfColors5 = graph5.colorGraph();
+        System.out.println("CAR91: "+numberOfColors1);
+        System.out.println("CAR92: "+numberOfColors2);
+        System.out.println("KFU93: "+numberOfColors3);
+        System.out.println("TRE92: "+numberOfColors4);
+        System.out.println("YOR83: "+numberOfColors5);
+
+
     }
 
 

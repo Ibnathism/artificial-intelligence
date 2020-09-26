@@ -46,7 +46,6 @@ public class Graph {
     }
 
     public int colorGraph() {
-        int colorCount = 0;
         int doneColoring = 0;
         List<Integer> totalColors = new ArrayList<>();
         Node max = myNodes.get(0);
@@ -94,8 +93,22 @@ public class Graph {
         }
 
         Set<Integer> uniqueColor = new HashSet<>(totalColors);
-        System.out.println(uniqueColor.size());
+        //System.out.println(uniqueColor.size());
 
         return uniqueColor.size();
     }
+
+
+    /*public int colorGraphBrelaz(){
+        PriorityQueue<Node> pq = new PriorityQueue<>(this.totalNodes, new BrelazNodeComparator());
+        pq.addAll(myNodes);
+        int doneColoring = 0;
+        while (doneColoring<this.totalNodes){
+            Node temp = pq.poll();
+            if (temp!=null){
+                if (temp.getColor()!=-1){
+            }
+        }
+
+    }*/
 }
