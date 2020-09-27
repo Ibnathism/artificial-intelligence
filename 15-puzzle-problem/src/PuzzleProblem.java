@@ -20,7 +20,7 @@ public class PuzzleProblem {
             for (int k = 0; k < n; k++) {
                 st = br.readLine();
                 int[][] initial = new int[4][4];
-                String[] strings = st.split(",");
+                String[] strings = st.split(" ");
                 //System.out.println("Insert Initial State");
                 int p = 0;
                 for (int i = 0; i < 4; i++) {
@@ -36,7 +36,7 @@ public class PuzzleProblem {
                 SearchAStar aStar = new SearchAStar(puzzleMatrix);
                 Stack<PuzzleMatrix> stack = new Stack<>();
                 Stack<String> moves = new Stack<>();
-                System.out.println("Given ");
+                System.out.println("\nGiven ");
                 for (int i = 0; i < initial.length; i++) {
                     for (int j = 0; j < initial.length; j++) {
                         System.out.print(initial[i][j]+"\t");

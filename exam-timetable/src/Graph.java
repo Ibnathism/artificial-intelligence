@@ -1,5 +1,14 @@
 import java.util.*;
-
+class BrelazNodeComparator implements Comparator<Node> {
+    @Override
+    public int compare(Node node, Node t1) {
+        if (node.getSaturationDegree()<t1.getSaturationDegree()) return 1;
+        else if (node.getSaturationDegree()>t1.getSaturationDegree()) return -1;
+        else {
+            return Integer.compare(t1.getMyNeighbours().size(), node.getMyNeighbours().size());
+        }
+    }
+}
 public class Graph {
     private List<Node> myNodes;
     private int totalNodes;
@@ -45,70 +54,44 @@ public class Graph {
         return this;
     }
 
-    public int colorGraph() {
-        int doneColoring = 0;
-        List<Integer> totalColors = new ArrayList<>();
-        Node max = myNodes.get(0);
-        for (Node node:
-                this.myNodes) {
-            if (max.getNeighbours().size()<node.getNeighbours().size()) {
-                //System.out.println("Max "+max.getName()+"  maxNeigh "+max.getNeighbours().size());
-
-                //System.out.println("Node "+node.getName()+"  nodeNeigh "+node.getNeighbours().size());
-                max=this.getNode(node.getName());
-            }
-        }
-        boolean[] availableColors = new boolean[this.myNodes.size()];
-        Arrays.fill(availableColors, true);
-        //System.out.println("final "+max.getName()+"  Neigh "+max.getNeighbours().size());
-        max.setColor(0);
-        //System.out.println("Final color : " + max.getColor());
-        totalColors.add(0);
-        doneColoring++;
-        availableColors[0] = false;
-        while(doneColoring<this.totalNodes) {
-            Node temp = max.getNeighbours().poll();
-            if (temp!=null){
-
-                Object[] tempNeighbours = temp.getNeighbours().toArray();
-                Arrays.fill(availableColors, true);
-
-                for (int i = 0; i < tempNeighbours.length; i++) {
-                    Node node = (Node) tempNeighbours[i];
-                    if(node.getColor()!=-1) availableColors[node.getColor()] = false;
-                }
-                for (int i = 0; i < availableColors.length; i++) {
-                    if (availableColors[i]) {
-                        temp.setColor(i);
-                        totalColors.add(i);
-                        doneColoring++;
-                        availableColors[i] = false;
-                        break;
-                    }
-                }
-                max = temp;
-                Arrays.fill(availableColors, true);
-                availableColors[max.getColor()] = false;
-            }
-        }
-
-        Set<Integer> uniqueColor = new HashSet<>(totalColors);
-        //System.out.println(uniqueColor.size());
-
-        return uniqueColor.size();
-    }
-
-
-    /*public int colorGraphBrelaz(){
+    public int colorGraphBrelaz(){
         PriorityQueue<Node> pq = new PriorityQueue<>(this.totalNodes, new BrelazNodeComparator());
         pq.addAll(myNodes);
-        int doneColoring = 0;
-        while (doneColoring<this.totalNodes){
+        int count = 0;
+        boolean[] colors = new boolean[totalNodes];
+
+        Arrays.fill(colors, false);
+        while (!pq.isEmpty()) {
+            boolean[] availableColors = new boolean[totalNodes];
+            Arrays.fill(availableColors, true);
             Node temp = pq.poll();
-            if (temp!=null){
-                if (temp.getColor()!=-1){
+            if (temp==null) break;
+            else {
+                //System.out.println("Temp "+temp.getName()+" Saturation "+temp.getSaturationDegree());
+                if (temp.getColor() == -1) {
+                    //color temp
+                    for (Node n: temp.getMyNeighbours()) {
+                        n.setSaturationDegree(n.getSaturationDegree()+1);
+                        if (n.getColor()!=-1) availableColors[n.getColor()] = false;
+                    }
+                    for (int i = 0; i < totalNodes; i++) {
+                        if (availableColors[i]) {
+                            temp.setColor(i);
+                            if (!colors[i]){
+                                count++;
+                                colors[i] = true;
+                            }
+                            break;
+                        }
+                    }
+                }
+                //Arrays.fill(availableColors, true);
+                pq.add(temp);
+                //System.out.println(temp);
+                pq.remove(temp);
             }
         }
 
-    }*/
+        return count;
+    }
 }

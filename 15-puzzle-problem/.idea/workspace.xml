@@ -19,7 +19,14 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0194c185-8f56-4ec0-9062-18ed58d0ed96" name="Default Changelist" comment="" />
+    <list default="true" id="0194c185-8f56-4ec0-9062-18ed58d0ed96" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/15-puzzle-problem.iml" beforeDir="false" afterPath="$PROJECT_DIR$/15-puzzle-problem.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/input.txt" beforeDir="false" afterPath="$PROJECT_DIR$/input.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/15-puzzle-problem/PuzzleProblem.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/15-puzzle-problem/PuzzleProblem.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/PuzzleProblem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PuzzleProblem.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../exam-timetable/exam-timetable.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../exam-timetable/exam-timetable.iml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -76,17 +83,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
-      <option name="arquillianRunConfiguration">
-        <value>
-          <option name="containerStateName" value="" />
-        </value>
-      </option>
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <list>
       <item itemvalue="Application.Main" />
       <item itemvalue="Application.PuzzleProblem" />
@@ -114,6 +110,10 @@
       <workItem from="1600976687395" duration="223000" />
       <workItem from="1600977183755" duration="668000" />
       <workItem from="1600978239366" duration="2246000" />
+      <workItem from="1601139314064" duration="452000" />
+      <workItem from="1601175885178" duration="4338000" />
+      <workItem from="1601203607403" duration="890000" />
+      <workItem from="1601204591080" duration="546000" />
     </task>
     <servers />
   </component>
@@ -137,22 +137,22 @@
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
     <state x="520" y="294" width="424" height="514" key="FileChooserDialogImpl/0.27.1920.1053@0.27.1920.1053" timestamp="1600977788849" />
-    <state width="1354" height="618" key="GridCell.Tab.0.bottom" timestamp="1600977853921">
+    <state width="1874" height="770" key="GridCell.Tab.0.bottom" timestamp="1601204497197">
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
-    <state width="1354" height="618" key="GridCell.Tab.0.bottom/0.27.1920.1053@0.27.1920.1053" timestamp="1600977853921" />
-    <state width="1354" height="618" key="GridCell.Tab.0.center" timestamp="1600977853921">
+    <state width="1874" height="770" key="GridCell.Tab.0.bottom/0.27.1920.1053@0.27.1920.1053" timestamp="1601204497197" />
+    <state width="1874" height="770" key="GridCell.Tab.0.center" timestamp="1601204497197">
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
-    <state width="1354" height="618" key="GridCell.Tab.0.center/0.27.1920.1053@0.27.1920.1053" timestamp="1600977853921" />
-    <state width="1354" height="618" key="GridCell.Tab.0.left" timestamp="1600977853920">
+    <state width="1874" height="770" key="GridCell.Tab.0.center/0.27.1920.1053@0.27.1920.1053" timestamp="1601204497197" />
+    <state width="1874" height="770" key="GridCell.Tab.0.left" timestamp="1601204497196">
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
-    <state width="1354" height="618" key="GridCell.Tab.0.left/0.27.1920.1053@0.27.1920.1053" timestamp="1600977853920" />
-    <state width="1354" height="618" key="GridCell.Tab.0.right" timestamp="1600977853921">
+    <state width="1874" height="770" key="GridCell.Tab.0.left/0.27.1920.1053@0.27.1920.1053" timestamp="1601204497196" />
+    <state width="1874" height="770" key="GridCell.Tab.0.right" timestamp="1601204497197">
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
-    <state width="1354" height="618" key="GridCell.Tab.0.right/0.27.1920.1053@0.27.1920.1053" timestamp="1600977853921" />
+    <state width="1874" height="770" key="GridCell.Tab.0.right/0.27.1920.1053@0.27.1920.1053" timestamp="1601204497197" />
     <state x="118" y="124" width="1024" height="845" key="SettingsEditor" timestamp="1600977720676">
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
@@ -161,16 +161,5 @@
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
     <state x="0" y="146" width="1474" height="810" key="new project wizard/0.27.1920.1053@0.27.1920.1053" timestamp="1600977850135" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/Functions.java</url>
-          <line>67</line>
-          <option name="timeStamp" value="14" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>

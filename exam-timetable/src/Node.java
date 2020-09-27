@@ -1,30 +1,23 @@
 import java.util.*;
 
-class BrelazNodeComparator implements Comparator<Node> {
-    @Override
-    public int compare(Node node, Node t1) {
-        if (node.getSaturationDegree()<t1.getSaturationDegree()) return 1;
-        else if (node.getSaturationDegree()>t1.getSaturationDegree()) return -1;
-        else {
-            return Integer.compare(t1.getNeighbours().size(), node.getNeighbours().size());
-        }
-    }
-}
+
 
 
 public class Node {
     private String name;
-    private PriorityQueue<Node> neighbours;
+    private List<Node> myNeighbours;
+    private int saturationDegree;
     private Integer color;
 
     public Node(String name) {
         this.name = name;
-        this.neighbours = new PriorityQueue<>(new BrelazNodeComparator());
+        this.myNeighbours = new ArrayList<>();
         this.color = -1;
+        this.saturationDegree = 0;
     }
 
     public Node() {
-        this.neighbours = new PriorityQueue<>();
+        this.myNeighbours = new ArrayList<>();
         this.color = -1;
     }
 
@@ -40,22 +33,30 @@ public class Node {
         this.color = color;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public int getSaturationDegree() {
+        return saturationDegree;
     }
 
-
+    public void setSaturationDegree(int saturationDegree) {
+        this.saturationDegree = saturationDegree;
+    }
 
     public void addNeighbour(Node node){
-        if (!this.neighbours.contains(node)) this.neighbours.add(node);
+        if (!this.myNeighbours.contains(node)) this.myNeighbours.add(node);
     }
 
-    public PriorityQueue<Node> getNeighbours() {
-        return this.neighbours;
+    public List<Node> getMyNeighbours() {
+        return myNeighbours;
     }
 
-    public boolean isNeighbour(Node node){
-        return neighbours.contains(node);
+    @Override
+    public String toString() {
+        StringBuilder str = new StringBuilder("\nNode : " + this.getName() + " SatDeg: " + this.getSaturationDegree() + "\nNeighbours: ");
+        for (Node n:
+             myNeighbours) {
+            str.append(n.getName()).append("->").append(n.getSaturationDegree()).append(",");
+        }
+        return str.toString();
     }
 
     @Override
@@ -71,12 +72,5 @@ public class Node {
         return Objects.hash(name);
     }
 
-    public int getSaturationDegree() {
-        int saturationDegree = 0;
-        for (Node neighbour:
-             this.getNeighbours()) {
-            if (neighbour.color!=-1) saturationDegree++;
-        }
-        return saturationDegree;
-    }
+
 }
