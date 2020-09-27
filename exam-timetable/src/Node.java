@@ -16,11 +16,6 @@ public class Node {
         this.saturationDegree = 0;
     }
 
-    public Node() {
-        this.myNeighbours = new ArrayList<>();
-        this.color = -1;
-    }
-
     public String getName() {
         return name;
     }

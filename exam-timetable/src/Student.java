@@ -8,10 +8,6 @@ public class Student {
         myCourses = new ArrayList<>();
     }
 
-    public Student(List<Course> myCourses) {
-        this.myCourses = myCourses;
-    }
-
     public void setMyCourses(List<Course> myCourses) {
         this.myCourses = myCourses;
     }

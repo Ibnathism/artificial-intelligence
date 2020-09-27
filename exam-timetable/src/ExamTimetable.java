@@ -4,6 +4,8 @@ import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
 
+
+
 public class ExamTimetable {
     public static List<Course> getCourseList(String name){
         BufferedReader bufferedReader;

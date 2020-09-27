@@ -6,8 +6,4 @@ public class Solution {
         this.courseNumber = courseNumber;
         this.slotNumber = slotNumber;
     }
-
-    public int getCourseNumber() {
-        return this.courseNumber;
-    }
 }

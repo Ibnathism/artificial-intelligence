@@ -27,18 +27,9 @@ public class Graph {
         return null;
     }
 
-    public List<Node> getMyNodes() {
-        return myNodes;
-    }
-
-    public void setMyNodes(List<Node> myNodes) {
-        this.myNodes = myNodes;
-    }
 
     public Graph addEdges(List<Student> studentList) {
-
-        for (Student s:
-             studentList) {
+        for (Student s: studentList) {
             List<Course> myCourses = s.getMyCourses();
             for (int i = 0; i < myCourses.size()-1 ; i++) {
                 //System.out.println(myCourses.get(i).getValue());
