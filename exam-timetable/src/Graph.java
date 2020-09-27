@@ -2,8 +2,8 @@ import java.util.*;
 class BrelazNodeComparator implements Comparator<Node> {
     @Override
     public int compare(Node node, Node t1) {
-        if (node.getSaturationDegree()<t1.getSaturationDegree()) return 1;
-        else if (node.getSaturationDegree()>t1.getSaturationDegree()) return -1;
+        if (node.getUniqueSaturationDegree()<t1.getUniqueSaturationDegree()) return 1;
+        else if (node.getUniqueSaturationDegree()>t1.getUniqueSaturationDegree()) return -1;
         else {
             return Integer.compare(t1.getMyNeighbours().size(), node.getMyNeighbours().size());
         }

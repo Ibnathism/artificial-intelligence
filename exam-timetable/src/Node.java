@@ -1,8 +1,5 @@
 import java.util.*;
 
-
-
-
 public class Node {
     private String name;
     private List<Node> myNeighbours;
@@ -30,6 +27,13 @@ public class Node {
 
     public int getSaturationDegree() {
         return saturationDegree;
+    }
+
+    public int getUniqueSaturationDegree() {
+        List<Integer> colors = new ArrayList<>();
+        for (Node n:myNeighbours) colors.add(n.getColor());
+        Set<Integer> uniqueColor = new HashSet<Integer>(colors);
+        return uniqueColor.size();
     }
 
     public void setSaturationDegree(int saturationDegree) {
