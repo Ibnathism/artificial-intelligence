@@ -25,13 +25,12 @@ public class Node {
         this.color = color;
     }
 
-    public int getSaturationDegree() {
-        return saturationDegree;
-    }
 
-    public int getUniqueSaturationDegree() {
+    public int getSaturationDegree() {
         List<Integer> colors = new ArrayList<>();
-        for (Node n:myNeighbours) colors.add(n.getColor());
+        for (Node n:myNeighbours) {
+            if (n.getColor()!=-1) colors.add(n.getColor());
+        }
         Set<Integer> uniqueColor = new HashSet<Integer>(colors);
         return uniqueColor.size();
     }
