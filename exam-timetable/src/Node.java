@@ -3,6 +3,8 @@ import java.util.*;
 public class Node {
     private String name;
     private List<Node> myNeighbours;
+
+    private int numberOfStudents;
     private int saturationDegree;
     private Integer color;
 
@@ -12,7 +14,13 @@ public class Node {
         this.color = -1;
         this.saturationDegree = 0;
     }
-
+    public Node(String name, int numberOfStudents) {
+        this.name = name;
+        this.myNeighbours = new ArrayList<>();
+        this.color = -1;
+        this.saturationDegree = 0;
+        this.numberOfStudents = numberOfStudents;
+    }
     public String getName() {
         return name;
     }
@@ -32,7 +40,8 @@ public class Node {
             if (n.getColor()!=-1) colors.add(n.getColor());
         }
         Set<Integer> uniqueColor = new HashSet<Integer>(colors);
-        return uniqueColor.size();
+        this.saturationDegree = uniqueColor.size();
+        return saturationDegree;
     }
 
     public void setSaturationDegree(int saturationDegree) {

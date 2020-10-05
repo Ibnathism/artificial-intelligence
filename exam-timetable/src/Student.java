@@ -2,17 +2,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Student {
-    private List<Course> myCourses;
+    private List<Node> myCourses;
 
     public Student() {
         myCourses = new ArrayList<>();
     }
 
-    public void setMyCourses(List<Course> myCourses) {
+    public void setMyCourses(List<Node> myCourses) {
         this.myCourses = myCourses;
     }
 
-    public List<Course> getMyCourses() {
+    public List<Node> getMyCourses() {
         return myCourses;
     }
 }

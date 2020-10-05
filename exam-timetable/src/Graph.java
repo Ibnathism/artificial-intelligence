@@ -31,12 +31,12 @@ public class Graph {
 
     public Graph addEdges(List<Student> studentList) {
         for (Student s: studentList) {
-            List<Course> myCourses = s.getMyCourses();
+            List<Node> myCourses = s.getMyCourses();
             for (int i = 0; i < myCourses.size()-1 ; i++) {
                 //System.out.println(myCourses.get(i).getValue());
-                Node node1 = this.getNode(myCourses.get(i).getValue());
+                Node node1 = this.getNode(myCourses.get(i).getName());
                 for (int j = 1; j < myCourses.size(); j++) {
-                    Node node2 = this.getNode(myCourses.get(j).getValue());
+                    Node node2 = this.getNode(myCourses.get(j).getName());
                     node1.addNeighbour(node2);
                     node2.addNeighbour(node1);
                 }
@@ -87,10 +87,33 @@ public class Graph {
         return count;
     }
 
-    public int[] getExamDays(List<Course> myCourses) {
+
+    public double calculatePenalty(List<Student> students) {
+        double penalty = 0.0;
+        int[] penaltyConstants = {16, 8, 4, 2, 1};
+        for (Student student :
+                students) {
+            List<Node> myCourses = student.getMyCourses();
+            int[] myExamDays = this.getExamDays(myCourses);
+            Arrays.sort(myExamDays);
+            int myPenalty = 0;
+            for (int i = 0; i < myExamDays.length - 1; i++) {
+                if (myExamDays[i+1]!=-1 && myExamDays[i]!=-1){
+                    int diff = myExamDays[i+1] - myExamDays[i];
+                    if (diff>=1 && diff<=5) myPenalty += myPenalty + penaltyConstants[diff-1];
+                }
+
+            }
+            penalty = penalty + myPenalty;
+
+        }
+        penalty = (penalty/students.size());
+        return penalty;
+    }
+    public int[] getExamDays(List<Node> myCourses) {
         int[] colors = new int[myCourses.size()];
         for (int i = 0; i < myCourses.size(); i++) {
-            Node node = getNode(myCourses.get(i).getValue());
+            Node node = this.getNode(myCourses.get(i).getName());
             //System.out.println(node);
             if (node == null) {
                 colors[i] = -1;
