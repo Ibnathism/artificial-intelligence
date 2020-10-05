@@ -5,20 +5,17 @@ public class Node {
     private List<Node> myNeighbours;
 
     private int numberOfStudents;
-    private int saturationDegree;
     private Integer color;
 
     public Node(String name) {
         this.name = name;
         this.myNeighbours = new ArrayList<>();
         this.color = -1;
-        this.saturationDegree = 0;
     }
     public Node(String name, int numberOfStudents) {
         this.name = name;
         this.myNeighbours = new ArrayList<>();
         this.color = -1;
-        this.saturationDegree = 0;
         this.numberOfStudents = numberOfStudents;
     }
     public String getName() {
@@ -40,12 +37,7 @@ public class Node {
             if (n.getColor()!=-1) colors.add(n.getColor());
         }
         Set<Integer> uniqueColor = new HashSet<Integer>(colors);
-        this.saturationDegree = uniqueColor.size();
-        return saturationDegree;
-    }
-
-    public void setSaturationDegree(int saturationDegree) {
-        this.saturationDegree = saturationDegree;
+        return uniqueColor.size();
     }
 
     public void addNeighbour(Node node){

@@ -2,7 +2,6 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 
@@ -53,7 +52,6 @@ public class ExamTimetable {
         }
         return studentList;
     }
-
     public static List<Solution> getSolutionList(String name){
         BufferedReader bufferedReader;
         File solutionFile = new File(name);
@@ -80,43 +78,45 @@ public class ExamTimetable {
         List<Node> nodes = ExamTimetable.getCourseList(courseFileName);
         Graph g = new Graph(nodes);
         g = g.addEdges(studentList);
+        //System.out.println("Course Size "+nodes.size()+"   Graph nodes size "+g.getMyNodes().size());
         return g;
     }
-
-
 
     public static void main(String[] args) {
 
         Graph graph1 = ExamTimetable.initialize("car-s-91.crs", "car-s-91.stu");
         List<Student> students1 = ExamTimetable.getStudentList("car-s-91.stu");
         int numberOfColors1 = graph1.colorGraphBrelaz();
+        //int numberOfColors1 = graph1.colorGraphLargestDegree();
         System.out.println("CAR91: "+numberOfColors1 + "    " + graph1.calculatePenalty(students1));
 
         Graph graph2 = ExamTimetable.initialize("car-f-92.crs", "car-f-92.stu");
         List<Student> students2 = ExamTimetable.getStudentList("car-f-92.stu");
         int numberOfColors2 = graph2.colorGraphBrelaz();
+        //int numberOfColors2 = graph2.colorGraphLargestDegree();
         System.out.println("CAR92: "+numberOfColors2+ "    " + graph2.calculatePenalty(students2));
 
         Graph graph3 = ExamTimetable.initialize("kfu-s-93.crs", "kfu-s-93.stu");
         List<Student> students3 = ExamTimetable.getStudentList("kfu-s-93.stu");
         int numberOfColors3 = graph3.colorGraphBrelaz();
+        //int numberOfColors3 = graph3.colorGraphLargestDegree();
         System.out.println("KFU93: "+numberOfColors3+ "    " + graph3.calculatePenalty(students3));
 
         Graph graph4 = ExamTimetable.initialize("tre-s-92.crs", "tre-s-92.stu");
         List<Student> students4 = ExamTimetable.getStudentList("tre-s-92.stu");
         int numberOfColors4 = graph4.colorGraphBrelaz();
+        //int numberOfColors4 = graph4.colorGraphLargestDegree();
         System.out.println("TRE92: "+numberOfColors4+ "    " + graph4.calculatePenalty(students4));
 
         Graph graph5 = ExamTimetable.initialize("yor-f-83.crs", "yor-f-83.stu");
         List<Student> students5 = ExamTimetable.getStudentList("yor-f-83.stu");
         int numberOfColors5 = graph5.colorGraphBrelaz();
+        //int numberOfColors5 = graph5.colorGraphLargestDegree();
         System.out.println("YOR83: "+numberOfColors5+ "    " + graph5.calculatePenalty(students5));
 
 
 
 
     }
-
-
 
 }
