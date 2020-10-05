@@ -86,4 +86,18 @@ public class Graph {
 
         return count;
     }
+
+    public int[] getExamDays(List<Course> myCourses) {
+        int[] colors = new int[myCourses.size()];
+        for (int i = 0; i < myCourses.size(); i++) {
+            Node node = getNode(myCourses.get(i).getValue());
+            //System.out.println(node);
+            if (node == null) {
+                colors[i] = -1;
+            }
+            else colors[i] = node.getColor();
+
+        }
+        return colors;
+    }
 }
