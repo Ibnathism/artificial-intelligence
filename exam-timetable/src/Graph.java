@@ -1,5 +1,6 @@
 import java.text.DecimalFormat;
 import java.util.*;
+
 class BrelazNodeComparator implements Comparator<Node> {
     @Override
     public int compare(Node node, Node t1) {
@@ -93,11 +94,7 @@ public class Graph {
 
     public int colorGraphBrelaz(){
         PriorityQueue<Node> pq = new PriorityQueue<>(this.totalNodes, new BrelazNodeComparator());
-        //pq.addAll(myNodes);
-        for (Node node:
-             myNodes) {
-            pq.add(node);
-        }
+        pq.addAll(myNodes);
         return this.getColoring(pq);
     }
     public int colorGraphLargestDegree(){
@@ -107,7 +104,7 @@ public class Graph {
     }
 
 
-    public double calculatePenalty(List<Student> students) {
+    public double calculatePenalty(List<Student> students, String type) {
         double penalty = 0.0;
         int[] penaltyConstants = {-1, 16, 8, 4, 2, 1};
         for (Student student : students) {
@@ -120,37 +117,35 @@ public class Graph {
                     myExamDays[i] = node.getColor();
                 }
             }
-            Arrays.sort(myExamDays);
-           /*for (int i = 0; i < myExamDays.length; i++) {
-                System.out.print(" "+myExamDays[i]);
-            }
-            System.out.println();*/
             int myPenalty = 0;
             if (myExamDays.length==1) continue;
-            //Consecutive difference
-            for (int i = 0; i < myExamDays.length - 1; i++) {
 
-                if (myExamDays[i+1]!=-1 && myExamDays[i]!=-1){
-                    int diff = Math.abs(myExamDays[i+1] - myExamDays[i]);
-                    assert (diff!=0);
-                    //System.out.println(myExamDays[i] + "   "+ myExamDays[i+1]+"   Diff "+ diff);
+            if (type.equals("Consecutive")){
+                Arrays.sort(myExamDays);
+                for (int i = 0; i < myExamDays.length - 1; i++) {
 
-                    if (diff>=1 && diff<=5) {
-                        myPenalty = myPenalty + penaltyConstants[diff];
-                        //System.out.println("My Penalty "+myPenalty);
+                    if (myExamDays[i+1]!=-1 && myExamDays[i]!=-1){
+                        int diff = Math.abs(myExamDays[i+1] - myExamDays[i]);
+                        assert (diff!=0);
+                        //System.out.println(myExamDays[i] + "   "+ myExamDays[i+1]+"   Diff "+ diff);
+
+                        if (diff>=1 && diff<=5) {
+                            myPenalty = myPenalty + penaltyConstants[diff];
+                            //System.out.println("My Penalty "+myPenalty);
+                        }
                     }
                 }
             }
-            //System.out.println("Student "+student.getId() + "   Penalty "+myPenalty);
-            //All pair difference
-            /*for (int i = 0; i < myExamDays.length-1; i++) {
-                for (int j = 1; j < myExamDays.length; j++) {
-                    if (myExamDays[i]!=-1 && myExamDays[j]!=-1) {
-                        int diff = Math.abs(myExamDays[i] - myExamDays[j]);
-                        if (diff>=1 && diff<=5) myPenalty += myPenalty + penaltyConstants[diff];
+            else if (type.equals("AllPair")){
+                for (int i = 0; i < myExamDays.length-1; i++) {
+                    for (int j = 1; j < myExamDays.length; j++) {
+                        if (myExamDays[i]!=-1 && myExamDays[j]!=-1) {
+                            int diff = Math.abs(myExamDays[i] - myExamDays[j]);
+                            if (diff>=1 && diff<=5) myPenalty = myPenalty + penaltyConstants[diff];
+                        }
                     }
                 }
-            }*/
+            }
             penalty = penalty + myPenalty;
         }
         //System.out.println(students.size());

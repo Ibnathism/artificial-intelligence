@@ -3,7 +3,6 @@ import java.util.*;
 public class Node {
     private String name;
     private List<Node> myNeighbours;
-
     private int numberOfStudents;
     private Integer color;
 
