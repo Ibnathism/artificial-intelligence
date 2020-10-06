@@ -87,20 +87,30 @@ public class ExamTimetable {
         Graph graph = ExamTimetable.initialize(courseFileName, studentFileName);
         List<Student> students = ExamTimetable.getStudentList(studentFileName);
         int numberOfColors;
+        double penalty;
 
         if (scheme==1){             //LargestDegree
             numberOfColors = graph.colorGraphLargestDegree();
             System.out.println(dataset+": "+numberOfColors + "    " + graph.calculatePenalty(students, "Consecutive")+"    "+graph.calculatePenalty(students, "AllPair"));
+            //penalty = graph.applyKempe(students, "Consecutive");
+            //System.out.println(dataset+": "+numberOfColors + "    "+penalty);
         }
         else if (scheme==2){    //BrelazHeuristic
             numberOfColors = graph.colorGraphBrelaz();
-            System.out.println(dataset+": "+numberOfColors + "    " + graph.calculatePenalty(students, "Consecutive")+"    "+graph.calculatePenalty(students, "AllPair"));
+            List<Node> nodes = graph.getMyNodes();
+            for (Node node :
+                    nodes) {
+                System.out.println(node.getName()+" "+node.getColor());
+            }
+            //System.out.println(dataset+": "+numberOfColors + "    " + graph.calculatePenalty(students, "Consecutive")+"    "+graph.calculatePenalty(students, "AllPair"));
+            //penalty = graph.applyKempe(students, "Consecutive");
+            //System.out.println(dataset+": "+numberOfColors + "    "+penalty);
         }
 
     }
 
     public static void main(String[] args) {
-        System.out.println("Scheme1 LargestDegree");
+        /*System.out.println("Scheme1 LargestDegree");
         System.out.println();;
         ExamTimetable.showOutputs(1, "car-s-91.crs", "car-s-91.stu", "CAR91");
         ExamTimetable.showOutputs(1, "car-f-92.crs", "car-f-92.stu", "CAR92");
@@ -108,13 +118,13 @@ public class ExamTimetable {
         ExamTimetable.showOutputs(1, "tre-s-92.crs", "tre-s-92.stu", "TRE92");
         ExamTimetable.showOutputs(1, "yor-f-83.crs", "yor-f-83.stu", "YOR83");
         System.out.println();
-        System.out.println();
-        System.out.println("Scheme2  Brelaz");
-        System.out.println();
-        ExamTimetable.showOutputs(2, "car-s-91.crs", "car-s-91.stu", "CAR91");
-        ExamTimetable.showOutputs(2, "car-f-92.crs", "car-f-92.stu", "CAR92");
-        ExamTimetable.showOutputs(2, "kfu-s-93.crs", "kfu-s-93.stu", "KFU93");
-        ExamTimetable.showOutputs(2, "tre-s-92.crs", "tre-s-92.stu", "TRE92");
+        System.out.println();*/
+        //System.out.println("Scheme2  Brelaz");
+        //System.out.println();
+        //ExamTimetable.showOutputs(2, "car-s-91.crs", "car-s-91.stu", "CAR91");
+        //ExamTimetable.showOutputs(2, "car-f-92.crs", "car-f-92.stu", "CAR92");
+        //ExamTimetable.showOutputs(2, "kfu-s-93.crs", "kfu-s-93.stu", "KFU93");
+        //ExamTimetable.showOutputs(2, "tre-s-92.crs", "tre-s-92.stu", "TRE92");
         ExamTimetable.showOutputs(2, "yor-f-83.crs", "yor-f-83.stu", "YOR83");
 
 

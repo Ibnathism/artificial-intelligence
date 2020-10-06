@@ -21,10 +21,17 @@ class LargestDegreeComparator implements Comparator<Node> {
 public class Graph {
     private final List<Node> myNodes;
     private final int totalNodes;
+    boolean[] usedColors;
+
+    public Graph() {
+        this.myNodes = new ArrayList<>();
+        this.totalNodes = 0;
+    }
 
     public Graph(List<Node> myNodes) {
         this.myNodes = myNodes;
         this.totalNodes = this.myNodes.size();
+        this.usedColors = new boolean[totalNodes];
     }
 
     public Node getNode(String name){
@@ -55,10 +62,11 @@ public class Graph {
         return myNodes;
     }
 
+
     private int getColoring(PriorityQueue<Node> pq) {
         int count = 0;
 
-        boolean[] usedColors = new boolean[totalNodes];
+
         Arrays.fill(usedColors, false);
         while (!pq.isEmpty()) {
             boolean[] availableColors = new boolean[totalNodes];
@@ -103,10 +111,86 @@ public class Graph {
         return this.getColoring(pq);
     }
 
+    public double applyKempe(List<Student> students, String type){
+
+        double myPenalty = calculatePenalty(students, type);
+
+        for (int i = 0; i < 10; i++) {
+            //choose a vertex v
+            Node startNode = chooseVertex();
+
+            //choose a color c that is not equal to color(v)
+            int color1 = startNode.getColor();
+            int color2 = chooseVertex().getColor();
+            while (color1==color2){
+                Node temp = chooseVertex();
+                color2 = temp.getColor();
+            }
+
+            //find kempe chain using v and c
+            System.out.println("Kempe chain finding with node "+startNode.getName() +"  of color "+startNode.getColor()+"  and color "+color2);
+            Queue<Node> queue = new LinkedList<>();
+            List<Node> kempeNodes = new ArrayList<>();
+            queue.add(startNode);
+            kempeNodes.add(startNode);
+            int alternate = color2;
+            while (!queue.isEmpty()){
+                Node varNode = queue.poll();
+                //System.out.println("Found "+varNode.getName()+" from queue having color "+varNode);
+                if (varNode.getColor()==color1) alternate = color2;
+                else if (varNode.getColor()==color2) alternate = color1;
+                else System.out.println("Error found : Other color in kempe chain");
+
+                List<Node> myNeighbours = varNode.getMyNeighbours();
+                /*for (int j = 0; j < myNeighbours.size(); j++) {
+                    System.out.print(" "+myNeighbours.get(j).getName());
+                }*/
+                for (Node neighbour : myNeighbours) {
+                    //neighbour.setParent(varNode);
+                    if (neighbour.getColor()==alternate){
+                        //System.out.println("Found a node of this chain "+neighbour.getName()+" having color "+neighbour.getColor());
+                        kempeNodes.add(neighbour);
+                        queue.add(neighbour);
+                        //neighbour.setParent(temp);
+                    }
+                }
+            }
+            //interchange colors
+            for (Node node :
+                    kempeNodes) {
+                if (node.getColor() == color1) this.getNode(node.getName()).setColor(color2);
+                else if (node.getColor() == color2) this.getNode(node.getName()).setColor(color1);
+                else System.out.println("Error found : Other color in kempe chain");
+            }
+
+            //checkPenalty
+            double newPenalty = calculatePenalty(students, type);
+            if (newPenalty >= myPenalty){
+                for (Node node : kempeNodes) {
+                    if (node.getColor() == color1) this.getNode(node.getName()).setColor(color2);
+                    else if (node.getColor() == color2) this.getNode(node.getName()).setColor(color1);
+                    else System.out.println("Error found : Other color in kempe chain");
+                }
+            }
+            else myPenalty = newPenalty;
+        }
+
+        return myPenalty;
+    }
+
+
+
+    public Node chooseVertex() {
+        int min = 0, max = this.getMyNodes().size()-1;
+        int rand = (int) ((Math.random() * (max - min)) + min);
+        return this.getMyNodes().get(rand);
+    }
+
+
 
     public double calculatePenalty(List<Student> students, String type) {
         double penalty = 0.0;
-        int[] penaltyConstants = {-1, 16, 8, 4, 2, 1};
+        int[] penaltyConstants = {Integer.MAX_VALUE, 16, 8, 4, 2, 1};
         for (Student student : students) {
             List<Node> myCourses = student.getMyCourses();
             if (myCourses.isEmpty()) continue;
@@ -138,10 +222,10 @@ public class Graph {
             }
             else if (type.equals("AllPair")){
                 for (int i = 0; i < myExamDays.length-1; i++) {
-                    for (int j = 1; j < myExamDays.length; j++) {
+                    for (int j = i+1; j < myExamDays.length; j++) {
                         if (myExamDays[i]!=-1 && myExamDays[j]!=-1) {
                             int diff = Math.abs(myExamDays[i] - myExamDays[j]);
-                            if (diff>=1 && diff<=5) myPenalty = myPenalty + penaltyConstants[diff];
+                            if (diff>=1 && diff<=5 && i!=j) myPenalty = myPenalty + penaltyConstants[diff];
                         }
                     }
                 }

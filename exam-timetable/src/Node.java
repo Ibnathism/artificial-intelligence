@@ -1,21 +1,24 @@
 import java.util.*;
 
-public class Node {
+public class Node{
     private String name;
     private List<Node> myNeighbours;
     private int numberOfStudents;
     private Integer color;
+    private Node parent;
 
     public Node(String name) {
         this.name = name;
         this.myNeighbours = new ArrayList<>();
         this.color = -1;
+        parent = null;
     }
     public Node(String name, int numberOfStudents) {
         this.name = name;
         this.myNeighbours = new ArrayList<>();
         this.color = -1;
         this.numberOfStudents = numberOfStudents;
+        parent = null;
     }
     public String getName() {
         return name;
@@ -28,7 +31,6 @@ public class Node {
     public void setColor(Integer color) {
         this.color = color;
     }
-
 
     public int getSaturationDegree() {
         List<Integer> colors = new ArrayList<>();
@@ -45,6 +47,14 @@ public class Node {
 
     public List<Node> getMyNeighbours() {
         return myNeighbours;
+    }
+
+    public Node getParent() {
+        return parent;
+    }
+
+    public void setParent(Node parent) {
+        this.parent = parent;
     }
 
     @Override
