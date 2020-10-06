@@ -1,3 +1,4 @@
+import java.text.DecimalFormat;
 import java.util.*;
 class BrelazNodeComparator implements Comparator<Node> {
     @Override
@@ -62,8 +63,10 @@ public class Graph {
             boolean[] availableColors = new boolean[totalNodes];
             Arrays.fill(availableColors, true);
             Node temp = pq.poll();
+
             if (temp==null) break;
             else {
+                //System.out.println(temp.getName());
                 if (temp.getColor() == -1) {
                     //color temp
                     for (Node neighbour: temp.getMyNeighbours()) {
@@ -109,35 +112,37 @@ public class Graph {
         int[] penaltyConstants = {-1, 16, 8, 4, 2, 1};
         for (Student student : students) {
             List<Node> myCourses = student.getMyCourses();
-            int[] myExamDays = this.getExamDays(myCourses);
+            if (myCourses.isEmpty()) continue;
+            int[] myExamDays = new int[myCourses.size()];
+            for (int i = 0; i < myCourses.size(); i++) {
+                if (!myCourses.get(i).getName().equals("")) {
+                    Node node = this.getNode(myCourses.get(i).getName());
+                    myExamDays[i] = node.getColor();
+                }
+            }
             Arrays.sort(myExamDays);
             int myPenalty = 0;
             if (myExamDays.length==1) continue;
+            //Consecutive difference
             for (int i = 0; i < myExamDays.length - 1; i++) {
                 if (myExamDays[i+1]!=-1 && myExamDays[i]!=-1){
                     int diff = Math.abs(myExamDays[i+1] - myExamDays[i]);
+                    assert (diff!=0);
                     if (diff>=1 && diff<=5) myPenalty += myPenalty + penaltyConstants[diff];
                 }
-
             }
+            //All pair difference
+            /*for (int i = 0; i < myExamDays.length-1; i++) {
+                for (int j = 1; j < myExamDays.length; j++) {
+                    if (myExamDays[i]!=-1 && myExamDays[j]!=-1) {
+                        int diff = Math.abs(myExamDays[i] - myExamDays[j]);
+                        if (diff>=1 && diff<=5) myPenalty += myPenalty + penaltyConstants[diff];
+                    }
+                }
+            }*/
             penalty = penalty + myPenalty;
-
         }
         penalty = (penalty/(double) students.size());
-        return penalty;
-    }
-    public int[] getExamDays(List<Node> myCourses) {
-        int[] colors = new int[myCourses.size()];
-        for (int i = 0; i < myCourses.size(); i++) {
-            Node node = this.getNode(myCourses.get(i).getName());
-            //System.out.println(node);
-            if (node == null) {
-                //System.out.println("Null found");
-                colors[i] = -1;
-            }
-            else colors[i] = node.getColor();
-
-        }
-        return colors;
+        return Double.parseDouble(new DecimalFormat("##.##").format(penalty));
     }
 }

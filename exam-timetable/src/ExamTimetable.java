@@ -15,7 +15,7 @@ public class ExamTimetable {
             bufferedReader = new BufferedReader(new FileReader(courseFile));
             String str = bufferedReader.readLine();
             while (str!=null) {
-                String[] temp = str.split(" ");
+                String[] temp = str.trim().split(" ");
                 Node node = new Node(temp[0], Integer.parseInt(temp[1]));
                 nodes.add(node);
                 str = bufferedReader.readLine();
@@ -34,11 +34,11 @@ public class ExamTimetable {
 
             bufferedReader = new BufferedReader(new FileReader(studentFile));
             String str = bufferedReader.readLine();
-
+            int index = 0;
             while (str!=null) {
-                String[] temp = str.split(" ");
+                String[] temp = str.trim().split(" ");
                 List<Node> nodes = new ArrayList<>();
-                Student student = new Student();
+                Student student = new Student(index);
                 for (String val:
                         temp) {
                     nodes.add(new Node(val));
@@ -46,6 +46,7 @@ public class ExamTimetable {
                 student.setMyCourses(nodes);
                 studentList.add(student);
                 str = bufferedReader.readLine();
+                index++;
             }
         } catch (Exception e){
             e.printStackTrace();
