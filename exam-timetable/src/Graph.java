@@ -121,16 +121,27 @@ public class Graph {
                 }
             }
             Arrays.sort(myExamDays);
+           /*for (int i = 0; i < myExamDays.length; i++) {
+                System.out.print(" "+myExamDays[i]);
+            }
+            System.out.println();*/
             int myPenalty = 0;
             if (myExamDays.length==1) continue;
             //Consecutive difference
             for (int i = 0; i < myExamDays.length - 1; i++) {
+
                 if (myExamDays[i+1]!=-1 && myExamDays[i]!=-1){
                     int diff = Math.abs(myExamDays[i+1] - myExamDays[i]);
                     assert (diff!=0);
-                    if (diff>=1 && diff<=5) myPenalty += myPenalty + penaltyConstants[diff];
+                    //System.out.println(myExamDays[i] + "   "+ myExamDays[i+1]+"   Diff "+ diff);
+
+                    if (diff>=1 && diff<=5) {
+                        myPenalty = myPenalty + penaltyConstants[diff];
+                        //System.out.println("My Penalty "+myPenalty);
+                    }
                 }
             }
+            //System.out.println("Student "+student.getId() + "   Penalty "+myPenalty);
             //All pair difference
             /*for (int i = 0; i < myExamDays.length-1; i++) {
                 for (int j = 1; j < myExamDays.length; j++) {
@@ -142,6 +153,7 @@ public class Graph {
             }*/
             penalty = penalty + myPenalty;
         }
+        //System.out.println(students.size());
         penalty = (penalty/(double) students.size());
         return Double.parseDouble(new DecimalFormat("##.##").format(penalty));
     }
