@@ -23,7 +23,7 @@ class LargestDegreeComparator implements Comparator<Node> {
 public class Graph {
     private final List<Node> myNodes;
     private final int totalNodes;
-    boolean[] usedColors;
+    //boolean[] usedColors;
 
     public Graph() {
         this.myNodes = new ArrayList<>();
@@ -33,7 +33,7 @@ public class Graph {
     public Graph(List<Node> myNodes) {
         this.myNodes = myNodes;
         this.totalNodes = this.myNodes.size();
-        this.usedColors = new boolean[totalNodes];
+        //this.usedColors = new boolean[totalNodes];
     }
 
     public Node getNode(String name){
@@ -64,15 +64,17 @@ public class Graph {
         return myNodes;
     }
 
-
     private int getColoring(PriorityQueue<Node> pq) {
-        int count = 0;
+        int colors = 0;
 
 
-        Arrays.fill(usedColors, false);
+        Node first = pq.poll();
+        assert first != null;
+        first.setColor(colors);
+        //Arrays.fill(usedColors, false);
         while (!pq.isEmpty()) {
-            boolean[] availableColors = new boolean[totalNodes];
-            Arrays.fill(availableColors, true);
+            //boolean[] availableColors = new boolean[totalNodes];
+            //Arrays.fill(availableColors, true);
             Node temp = pq.poll();
 
             if (temp==null) break;
@@ -80,15 +82,17 @@ public class Graph {
                 //System.out.println(temp.getName());
                 if (temp.getColor() == -1) {
                     //color temp
-                    for (Node neighbour: temp.getMyNeighbours()) {
-                        if (neighbour.getColor()!=-1) availableColors[neighbour.getColor()] = false;
+
+                    boolean isValid = false;
+                    int color;
+                    for (color = 0; color <= colors; color++) {
+                        isValid = checkValidityOfColor(temp, color);
+                        if (isValid) break;
                     }
-                    for (int i = 0; i < totalNodes; i++) {
-                        if (availableColors[i]) {
-                            temp.setColor(i);
-                            usedColors[i] = true;
-                            break;
-                        }
+                    if (isValid) temp.setColor(color);
+                    else {
+                        colors++;
+                        temp.setColor(colors);
                     }
                     pq.add(temp);
                     pq.remove(temp);
@@ -96,10 +100,18 @@ public class Graph {
 
             }
         }
-        for (int i = 0; i < totalNodes; i++) {
+        /*for (int i = 0; i < totalNodes; i++) {
             if (usedColors[i]) count++;
+        }*/
+        return colors+1;
+    }
+
+    private boolean checkValidityOfColor(Node node, int color){
+        List<Node> neighbours = node.getMyNeighbours();
+        for (Node n:neighbours){
+            if (n.getColor()==color) return false;
         }
-        return count;
+        return true;
     }
 
     public int colorGraphBrelaz(){
@@ -107,6 +119,7 @@ public class Graph {
         pq.addAll(myNodes);
         return this.getColoring(pq);
     }
+
     public int colorGraphLargestDegree(){
         PriorityQueue<Node> pq = new PriorityQueue<>(this.totalNodes, new LargestDegreeComparator());
         pq.addAll(myNodes);
@@ -228,16 +241,11 @@ public class Graph {
         return myPenalty;
     }
 
-
-
     public Node chooseVertex(List<Node> nodes) {
         int min = 0, max = nodes.size()-1;
         int rand = (int) ((Math.random() * (max - min)) + min);
         return nodes.get(rand);
     }
-
-
-
 
     public double calculatePenalty(List<Student> students, String type) {
         double penalty = 0.0;

@@ -53,26 +53,6 @@ public class ExamTimetable {
         }
         return studentList;
     }
-    private static List<Solution> getSolutionList(String name){
-        BufferedReader bufferedReader;
-        File solutionFile = new File(name);
-        List<Solution> solutionList = new ArrayList<>();
-        try {
-            bufferedReader = new BufferedReader(new FileReader(solutionFile));
-            String str = bufferedReader.readLine();
-            while (str!=null) {
-                String[] temp = str.trim().split(" ");
-                Solution solution = new Solution(Integer.parseInt(temp[0]), Integer.parseInt(temp[1]));
-                solutionList.add(solution);
-                str = bufferedReader.readLine();
-            }
-
-            //System.out.println(solutionList.get(3).getCourseNumber());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return solutionList;
-    }
 
     private static Graph initialize(String courseFileName, String studentFileName) {
         List<Student> studentList = ExamTimetable.getStudentList(studentFileName);
@@ -117,23 +97,17 @@ public class ExamTimetable {
 
     public static void main(String[] args) {
 
-
         String[] courseFileNames = {"car-s-91.crs", "car-f-92.crs", "kfu-s-93.crs", "tre-s-92.crs", "yor-f-83.crs"};
         String[] studentFileNames = {"car-s-91.stu",  "car-f-92.stu", "kfu-s-93.stu", "tre-s-92.stu", "yor-f-83.stu"};
         String[] datasets = {"CAR91", "CAR92", "KFU93", "TRE92", "YOR83"};
 
-
-       // int scheme = 1; //FOR largestDegree + kempeChain
+        //int scheme = 1; //FOR largestDegree + kempeChain
         //System.out.println("Scheme1 LargestDegree + kempeChain");
-
 
         int scheme = 2; //FOR dsatur + kempeChain
         System.out.println("Scheme2 DSatur + kempeChain");
 
-
         ExamTimetable.applyScheme(courseFileNames, studentFileNames, scheme, datasets);
-
-
 
     }
 
