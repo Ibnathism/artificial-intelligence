@@ -83,12 +83,18 @@ public class ExamTimetable {
         return g;
     }
 
+    private static void applyScheme(String[] courseFileNames, String[] studentFileNames, int scheme, String[] datasets){
+        for (int i = 4; i >= 0; i--) {
+            ExamTimetable.showOutputs(scheme, courseFileNames[i], studentFileNames[i], datasets[i]);
+        }
+    }
+
     private static void showOutputs(int scheme, String courseFileName, String studentFileName, String dataset) {
         Graph graph = ExamTimetable.initialize(courseFileName, studentFileName);
         List<Student> students = ExamTimetable.getStudentList(studentFileName);
         int numberOfColors = 0;
         double penalty;
-        int n = 10000;
+        int n = 1000;
 
         if (scheme==1){             //LargestDegree
             numberOfColors = graph.colorGraphLargestDegree();
@@ -102,29 +108,30 @@ public class ExamTimetable {
                 System.out.println(node.getName()+" "+node.getColor());
             }*/
         }
-        System.out.println(dataset+": "+numberOfColors + "    "+graph.calculatePenalty(students, "AllPair"));
+        System.out.print(dataset+": "+numberOfColors);
         penalty = graph.applyKempe(students, "AllPair", n);
-        System.out.println("Penalty after applying kempe chain :    "+penalty);
+        //penalty = graph.applyPairSwap(students, "AllPair", n);
+        System.out.print("    "+penalty);
+        System.out.println();
     }
 
     public static void main(String[] args) {
-        /*System.out.println("Scheme1 LargestDegree");
-        System.out.println();;
-        ExamTimetable.showOutputs(1, "car-s-91.crs", "car-s-91.stu", "CAR91");
-        ExamTimetable.showOutputs(1, "car-f-92.crs", "car-f-92.stu", "CAR92");
-        ExamTimetable.showOutputs(1, "kfu-s-93.crs", "kfu-s-93.stu", "KFU93");
-        ExamTimetable.showOutputs(1, "tre-s-92.crs", "tre-s-92.stu", "TRE92");
-        ExamTimetable.showOutputs(1, "yor-f-83.crs", "yor-f-83.stu", "YOR83");
-        System.out.println();
-        System.out.println();*/
-        System.out.println("Scheme2  Brelaz");
-        System.out.println();
-        ExamTimetable.showOutputs(2, "car-s-91.crs", "car-s-91.stu", "CAR91");
-        //ExamTimetable.showOutputs(2, "car-f-92.crs", "car-f-92.stu", "CAR92");
-        //ExamTimetable.showOutputs(2, "kfu-s-93.crs", "kfu-s-93.stu", "KFU93");
-        //ExamTimetable.showOutputs(2, "tre-s-92.crs", "tre-s-92.stu", "TRE92");
-        //ExamTimetable.showOutputs(2, "yor-f-83.crs", "yor-f-83.stu", "YOR83");
 
+
+        String[] courseFileNames = {"car-s-91.crs", "car-f-92.crs", "kfu-s-93.crs", "tre-s-92.crs", "yor-f-83.crs"};
+        String[] studentFileNames = {"car-s-91.stu",  "car-f-92.stu", "kfu-s-93.stu", "tre-s-92.stu", "yor-f-83.stu"};
+        String[] datasets = {"CAR91", "CAR92", "KFU93", "TRE92", "YOR83"};
+
+
+       // int scheme = 1; //FOR largestDegree + kempeChain
+        //System.out.println("Scheme1 LargestDegree + kempeChain");
+
+
+        int scheme = 2; //FOR dsatur + kempeChain
+        System.out.println("Scheme2 DSatur + kempeChain");
+
+
+        ExamTimetable.applyScheme(courseFileNames, studentFileNames, scheme, datasets);
 
 
 
