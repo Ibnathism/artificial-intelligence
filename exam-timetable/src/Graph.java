@@ -111,11 +111,11 @@ public class Graph {
         return this.getColoring(pq);
     }
 
-    public double applyKempe(List<Student> students, String type){
+    public double applyKempe(List<Student> students, String type, int n){
 
         double myPenalty = calculatePenalty(students, type);
 
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < n; i++) {
             //choose a vertex v
             Node startNode = chooseVertex();
 
@@ -128,7 +128,7 @@ public class Graph {
             }
 
             //find kempe chain using v and c
-            System.out.println("Kempe chain finding with node "+startNode.getName() +"  of color "+startNode.getColor()+"  and color "+color2);
+            //System.out.println("Kempe chain finding with node "+startNode.getName() +"  of color "+startNode.getColor()+"  and color "+color2);
             Queue<Node> queue = new LinkedList<>();
             List<Node> kempeNodes = new ArrayList<>();
             queue.add(startNode);
@@ -147,7 +147,7 @@ public class Graph {
                 }*/
                 for (Node neighbour : myNeighbours) {
                     //neighbour.setParent(varNode);
-                    if (neighbour.getColor()==alternate){
+                    if (neighbour.getColor()==alternate && !kempeNodes.contains(neighbour)){
                         //System.out.println("Found a node of this chain "+neighbour.getName()+" having color "+neighbour.getColor());
                         kempeNodes.add(neighbour);
                         queue.add(neighbour);
@@ -172,7 +172,10 @@ public class Graph {
                     else System.out.println("Error found : Other color in kempe chain");
                 }
             }
-            else myPenalty = newPenalty;
+            else {
+                System.out.println("Decreased Penalty "+newPenalty);
+                myPenalty = newPenalty;
+            }
         }
 
         return myPenalty;
