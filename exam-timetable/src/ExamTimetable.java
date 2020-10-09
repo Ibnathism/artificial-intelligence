@@ -74,7 +74,7 @@ public class ExamTimetable {
         List<Student> students = ExamTimetable.getStudentList(studentFileName);
         int numberOfColors = 0;
         double penalty;
-        int n = 1000;
+        int n = 100;
 
         if (scheme==1){             //LargestDegree
             numberOfColors = graph.colorGraphLargestDegree();
@@ -88,10 +88,11 @@ public class ExamTimetable {
                 System.out.println(node.getName()+" "+node.getColor());
             }*/
         }
-        System.out.print(dataset+": "+numberOfColors);
+        System.out.println(dataset+": ");
+        System.out.println("Slots "+numberOfColors);
         penalty = graph.applyKempe(students, "AllPair", n);
-        //penalty = graph.applyPairSwap(students, "AllPair", n);
-        System.out.print("    "+penalty);
+        penalty = graph.applyPairSwap(students, "AllPair", n);
+        System.out.println("Penalty "+penalty);
         System.out.println();
     }
 
@@ -101,11 +102,11 @@ public class ExamTimetable {
         String[] studentFileNames = {"car-s-91.stu",  "car-f-92.stu", "kfu-s-93.stu", "tre-s-92.stu", "yor-f-83.stu"};
         String[] datasets = {"CAR91", "CAR92", "KFU93", "TRE92", "YOR83"};
 
-        //int scheme = 1; //FOR largestDegree + kempeChain
-        //System.out.println("Scheme1 LargestDegree + kempeChain");
+        int scheme = 1; //FOR largestDegree + kempeChain
+        System.out.println("Scheme1 LargestDegree + kempeChain");
 
-        int scheme = 2; //FOR dsatur + kempeChain
-        System.out.println("Scheme2 DSatur + kempeChain");
+        //int scheme = 2; //FOR dsatur + kempeChain
+        //System.out.println("Scheme2 DSatur + kempeChain");
 
         ExamTimetable.applyScheme(courseFileNames, studentFileNames, scheme, datasets);
 

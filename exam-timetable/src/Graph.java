@@ -106,7 +106,7 @@ public class Graph {
         return colors+1;
     }
 
-    private boolean checkValidityOfColor(Node node, int color){
+    private boolean checkValidityOfColor(Node node, int color) {
         List<Node> neighbours = node.getMyNeighbours();
         for (Node n:neighbours){
             if (n.getColor()==color) return false;
@@ -114,19 +114,19 @@ public class Graph {
         return true;
     }
 
-    public int colorGraphBrelaz(){
+    public int colorGraphBrelaz() {
         PriorityQueue<Node> pq = new PriorityQueue<>(this.totalNodes, new BrelazNodeComparator());
         pq.addAll(myNodes);
         return this.getColoring(pq);
     }
 
-    public int colorGraphLargestDegree(){
+    public int colorGraphLargestDegree() {
         PriorityQueue<Node> pq = new PriorityQueue<>(this.totalNodes, new LargestDegreeComparator());
         pq.addAll(myNodes);
         return this.getColoring(pq);
     }
 
-    public double applyPairSwap(List<Student> students, String type, int n){
+    public double applyPairSwap(List<Student> students, String type, int n) {
         double myPenalty = calculatePenalty(students, type);
         for (int i = 0; i < n; i++) {
             Node node1 = chooseVertex(this.getMyNodes());
@@ -135,8 +135,9 @@ public class Graph {
             int color2 = node2.getColor();
 
             if (color1!=color2) {
-                boolean isValid1 = checkValidityOfPairSwap(node1, color2);
-                boolean isValid2 = checkValidityOfPairSwap(node2, color1);
+
+                boolean isValid1 = checkValidityOfPairSwap(node1, color2, node2);
+                boolean isValid2 = checkValidityOfPairSwap(node2, color1, node1);
 
                 if (isValid1 && isValid2){
                     node1.setColor(color2);
@@ -144,11 +145,14 @@ public class Graph {
 
                     double newPenalty = calculatePenalty(students, type);
 
-                    if (newPenalty>myPenalty) {
+                    if (newPenalty>=myPenalty) {
                         node1.setColor(color1);
                         node2.setColor(color2);
                     }
-                    else myPenalty = newPenalty;
+                    else {
+                        //System.out.println("Penalty decreased " + newPenalty);
+                        myPenalty = newPenalty;
+                    }
                 }
 
 
@@ -159,23 +163,20 @@ public class Graph {
         return myPenalty;
     }
 
-    private boolean checkValidityOfPairSwap(Node node, int color){
+    private boolean checkValidityOfPairSwap(Node node, int color, Node other) {
         List<Node> neighbours = node.getMyNeighbours();
         for (Node n: neighbours){
-            if (n.getColor()==color) return false;
+            if (n.getColor()==color && !n.getName().equals(other.getName())) return false;
         }
         return true;
     }
 
-    public double applyKempe(List<Student> students, String type, int n){
+    public double applyKempe(List<Student> students, String type, int n) {
 
         double myPenalty = calculatePenalty(students, type);
 
         for (int i = 0; i < n; i++) {
-            //choose a vertex v
             Node startNode = chooseVertex(this.getMyNodes());
-
-            //choose a color c that is not equal to color(v)
             int color1 = startNode.getColor();
             int color2 = 0;
             List<Node> startNodeNeighbours = startNode.getMyNeighbours();
@@ -184,35 +185,32 @@ public class Graph {
                 color2 = color2Node.getColor();
             } else continue;
 
-
-            //find kempe chain using v and c
-            //System.out.println("Kempe chain finding with node "+startNode.getName() +"  of color "+startNode.getColor()+"  and color "+color2);
             if (color1 != color2) {
                 Queue<Node> queue = new LinkedList<>();
-                //HashSet<Node> kempeNodes = new HashSet<>();
-                List<Node> kempeNodes = new ArrayList<>();
+                HashSet<Node> kempeNodes = new HashSet<>();
+                HashMap<String, Boolean> visited = new HashMap<>();
+                for (Node mynode:myNodes) {
+                    visited.put(mynode.getName(), false);
+                }
                 queue.add(startNode);
                 kempeNodes.add(startNode);
+                visited.put(startNode.getName(), true);
                 int alternate = color2;
                 while (!queue.isEmpty()) {
                     Node varNode = queue.poll();
-                    //System.out.println("Found "+varNode.getName()+" from queue having color "+varNode);
                     if (varNode.getColor() == color1) alternate = color2;
                     else if (varNode.getColor() == color2) alternate = color1;
                     else System.out.println("Error found : Other color in kempe chain");
 
                     List<Node> myNeighbours = varNode.getMyNeighbours();
-                /*for (int j = 0; j < myNeighbours.size(); j++) {
-                    System.out.print(" "+myNeighbours.get(j).getName());
-                }*/
+
                     for (Node neighbour : myNeighbours) {
-                        //neighbour.setParent(varNode);
-                        if (neighbour.getColor() == alternate && !kempeNodes.contains(neighbour)) {
-                            //System.out.println("Found a node of this chain "+neighbour.getName()+" having color "+neighbour.getColor());
+                        if (neighbour.getColor() == alternate && !visited.get(neighbour.getName())) {
                             kempeNodes.add(neighbour);
+                            visited.put(neighbour.getName(), true);
                             queue.add(neighbour);
-                            //neighbour.setParent(varNode);
                         }
+
                     }
                 }
                 //interchange colors

@@ -42,7 +42,9 @@ public class Node{
     }
 
     public void addNeighbour(Node node){
-        if (!this.myNeighbours.contains(node)) this.myNeighbours.add(node);
+        if (!this.myNeighbours.contains(node)) {
+            this.myNeighbours.add(node);
+        }
     }
 
     public List<Node> getMyNeighbours() {
