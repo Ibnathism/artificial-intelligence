@@ -20,6 +20,15 @@ public class Node{
         this.numberOfStudents = numberOfStudents;
         parent = null;
     }
+
+    public int getNumberOfStudents() {
+        return numberOfStudents;
+    }
+
+    public void setNumberOfStudents(int numberOfStudents) {
+        this.numberOfStudents = numberOfStudents;
+    }
+
     public String getName() {
         return name;
     }

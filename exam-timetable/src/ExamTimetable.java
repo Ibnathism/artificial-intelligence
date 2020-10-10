@@ -64,7 +64,7 @@ public class ExamTimetable {
     }
 
     private static void applyScheme(String[] courseFileNames, String[] studentFileNames, int scheme, String[] datasets){
-        for (int i = 4; i >= 0; i--) {
+        for (int i = 0; i < 5; i++) {
             ExamTimetable.showOutputs(scheme, courseFileNames[i], studentFileNames[i], datasets[i]);
         }
     }
@@ -74,7 +74,7 @@ public class ExamTimetable {
         List<Student> students = ExamTimetable.getStudentList(studentFileName);
         int numberOfColors = 0;
         double penalty;
-        int n = 100;
+        //int n = 100000;
 
         if (scheme==1){             //LargestDegree
             numberOfColors = graph.colorGraphLargestDegree();
@@ -88,10 +88,13 @@ public class ExamTimetable {
                 System.out.println(node.getName()+" "+node.getColor());
             }*/
         }
+        else if (scheme==3){
+            numberOfColors = graph.colorGraphLargestEnrollment();
+        }
         System.out.println(dataset+": ");
         System.out.println("Slots "+numberOfColors);
-        penalty = graph.applyKempe(students, "AllPair", n);
-        penalty = graph.applyPairSwap(students, "AllPair", n);
+        penalty = graph.applyKempe(students, "AllPair", 10000);
+        penalty = graph.applyPairSwap(students, "AllPair", 100000);
         System.out.println("Penalty "+penalty);
         System.out.println();
     }
@@ -103,10 +106,13 @@ public class ExamTimetable {
         String[] datasets = {"CAR91", "CAR92", "KFU93", "TRE92", "YOR83"};
 
         int scheme = 1; //FOR largestDegree + kempeChain
-        System.out.println("Scheme1 LargestDegree + kempeChain");
+        //System.out.println("Scheme1 LargestDegree + kempeChain");
 
-        //int scheme = 2; //FOR dsatur + kempeChain
+       //scheme = 2; //FOR dsatur + kempeChain
         //System.out.println("Scheme2 DSatur + kempeChain");
+
+        scheme = 3;
+        System.out.println("Largest enrollment ");
 
         ExamTimetable.applyScheme(courseFileNames, studentFileNames, scheme, datasets);
 

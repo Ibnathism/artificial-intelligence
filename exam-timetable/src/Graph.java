@@ -17,6 +17,13 @@ class LargestDegreeComparator implements Comparator<Node> {
         return Integer.compare(t1.getMyNeighbours().size(), node.getMyNeighbours().size());
     }
 }
+class LargestEnrollmentComparator implements Comparator<Node> {
+
+    @Override
+    public int compare(Node node, Node t1) {
+        return Integer.compare(t1.getNumberOfStudents(), node.getNumberOfStudents());
+    }
+}
 
 
 
@@ -122,6 +129,12 @@ public class Graph {
 
     public int colorGraphLargestDegree() {
         PriorityQueue<Node> pq = new PriorityQueue<>(this.totalNodes, new LargestDegreeComparator());
+        pq.addAll(myNodes);
+        return this.getColoring(pq);
+    }
+
+    public int colorGraphLargestEnrollment() {
+        PriorityQueue<Node> pq = new PriorityQueue<>(this.totalNodes, new LargestEnrollmentComparator());
         pq.addAll(myNodes);
         return this.getColoring(pq);
     }
