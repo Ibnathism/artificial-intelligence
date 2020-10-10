@@ -1,6 +1,5 @@
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -93,10 +92,25 @@ public class ExamTimetable {
         }
         System.out.println(dataset+": ");
         System.out.println("Slots "+numberOfColors);
-        penalty = graph.applyKempe(students, "AllPair", 10000);
-        penalty = graph.applyPairSwap(students, "AllPair", 100000);
+        penalty = graph.applyKempe(students, "AllPair", 100);
+        penalty = graph.applyPairSwap(students, "AllPair", 1000);
         System.out.println("Penalty "+penalty);
+
+        ExamTimetable.generateSolution(dataset, graph.getMyNodes());
         System.out.println();
+    }
+
+    private static void generateSolution(String dataset, List<Node> myNodes) {
+        try {
+            PrintWriter writer = new PrintWriter(dataset+".sol", StandardCharsets.UTF_8);
+            for (Node node : myNodes) {
+                writer.println(node.getName()+" "+node.getColor());
+            }
+            writer.close();
+
+        } catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     public static void main(String[] args) {
@@ -108,11 +122,11 @@ public class ExamTimetable {
         int scheme = 1; //FOR largestDegree + kempeChain
         //System.out.println("Scheme1 LargestDegree + kempeChain");
 
-       //scheme = 2; //FOR dsatur + kempeChain
-        //System.out.println("Scheme2 DSatur + kempeChain");
+       scheme = 2; //FOR dsatur + kempeChain
+        System.out.println("Scheme2 DSatur + kempeChain + pair swap");
 
-        scheme = 3;
-        System.out.println("Largest enrollment ");
+        //scheme = 3;
+        //System.out.println("Largest enrollment ");
 
         ExamTimetable.applyScheme(courseFileNames, studentFileNames, scheme, datasets);
 
