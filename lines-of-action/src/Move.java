@@ -1,4 +1,11 @@
 public class Move {
-    private BoardPosition initPosition;
-    private BoardPosition finalPosition;
+    String playerType;
+    BoardPosition initPosition;
+    BoardPosition finalPosition;
+
+    public Move(String player, BoardPosition initPosition, BoardPosition finalPosition) {
+        this.playerType = player;
+        this.initPosition = initPosition;
+        this.finalPosition = finalPosition;
+    }
 }

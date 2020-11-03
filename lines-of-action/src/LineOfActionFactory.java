@@ -9,8 +9,8 @@ public class LineOfActionFactory {
         LineOfAction loa = loaMap.get(loaPoints.toString());
 
         if (loa == null) {
-            System.out.println(type + ": " + loaPoints.toString());
-            LineOfAction myLoa = new LineOfAction();
+            //System.out.println(type + ": " + loaPoints.toString());
+            LineOfAction myLoa = new LineOfAction(type);
             for (Point point: loaPoints) {
                 myLoa.getBoardPositions().add(gamePlay.getBoard()[point.x][point.y]);
             }

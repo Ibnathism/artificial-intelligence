@@ -1,6 +1,6 @@
-public interface Constants {
-    int DIMENSION = 8;
-    String WHITE_TYPE = "WHITE";
-    String BLACK_TYPE = "BLACK";
-
+public class Constants {
+    static int DIMENSION = 8;
+    static String WHITE_TYPE = "W";
+    static String BLACK_TYPE = "B";
+    static String EMPTY = "_";
 }

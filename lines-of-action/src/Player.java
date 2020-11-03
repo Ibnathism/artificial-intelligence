@@ -5,10 +5,12 @@ public class Player {
     private String type;
     private List<BoardPosition> boardPositionsOfMyType;
 
-    public Player(String type, List<BoardPosition> boardPositions) {
+    public Player(String type) {
         this.type = type;
-        boardPositionsOfMyType = boardPositions;
+        boardPositionsOfMyType = new ArrayList<>();
     }
 
-
+    public List<BoardPosition> getBoardPositionsOfMyType() {
+        return boardPositionsOfMyType;
+    }
 }
