@@ -92,7 +92,7 @@ public class ExamTimetable {
         }
         System.out.println(dataset+": ");
         System.out.println("Slots "+numberOfColors);
-        penalty = graph.applyKempe(students, "AllPair", 100);
+        penalty = graph.applyKempe(students, "AllPair", 1000);
         penalty = graph.applyPairSwap(students, "AllPair", 1000);
         System.out.println("Penalty "+penalty);
 
