@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class BoardPosition {
+public class Block {
     private LineOfAction horizontal;
     private LineOfAction vertical;
     private LineOfAction leadingDiagonal;
@@ -12,12 +12,12 @@ public class BoardPosition {
 
     private String condition;
 
-    public BoardPosition(int row, int column) {
+    public Block(int row, int column) {
         this.row = row;
         this.column = column;
     }
 
-    public LineOfAction findSpecificLoa(BoardPosition movedPosition) {
+    public LineOfAction findSpecificLoa(Block movedPosition) {
         if (horizontal.getBoardPositions().contains(movedPosition)) return horizontal;
         if (vertical.getBoardPositions().contains(movedPosition)) return vertical;
         if (leadingDiagonal.getBoardPositions().contains(movedPosition)) return leadingDiagonal;
@@ -61,7 +61,7 @@ public class BoardPosition {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        BoardPosition that = (BoardPosition) o;
+        Block that = (Block) o;
         return row == that.row &&
                 column == that.column;
     }

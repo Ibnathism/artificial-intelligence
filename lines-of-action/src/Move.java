@@ -1,9 +1,9 @@
 public class Move {
     String playerType;
-    BoardPosition initPosition;
-    BoardPosition finalPosition;
+    Block initPosition;
+    Block finalPosition;
 
-    public Move(String player, BoardPosition initPosition, BoardPosition finalPosition) {
+    public Move(String player, Block initPosition, Block finalPosition) {
         this.playerType = player;
         this.initPosition = initPosition;
         this.finalPosition = finalPosition;

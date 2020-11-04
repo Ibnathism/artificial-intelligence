@@ -22,8 +22,8 @@ public class Main {
                     System.out.println("Format : (W/B):row,col:final_row,final_col");
                     input = scanner.next();
                     String playerType = input.split(":")[0];
-                    BoardPosition init = game.getBoard()[Integer.parseInt(input.split(":")[1].split(",")[0])][Integer.parseInt(input.split(":")[1].split(",")[1])];
-                    BoardPosition next = game.getBoard()[Integer.parseInt(input.split(":")[2].split(",")[0])][Integer.parseInt(input.split(":")[2].split(",")[1])];
+                    Block init = game.getBoard()[Integer.parseInt(input.split(":")[1].split(",")[0])][Integer.parseInt(input.split(":")[1].split(",")[1])];
+                    Block next = game.getBoard()[Integer.parseInt(input.split(":")[2].split(",")[0])][Integer.parseInt(input.split(":")[2].split(",")[1])];
                     Move move = new Move(playerType, init, next);
                     game.gameMove(move);
                     break;

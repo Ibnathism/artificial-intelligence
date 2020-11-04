@@ -5,17 +5,17 @@ import java.util.Objects;
 public class LineOfAction {
     private TypesOfLoa type;
     int checkerCount;
-    private List<BoardPosition> boardPositions;
+    private List<Block> blocks;
 
     public LineOfAction(TypesOfLoa type) {
         this.type = type;
         this.checkerCount = 0;
-        this.boardPositions = new ArrayList<>();
+        this.blocks = new ArrayList<>();
     }
 
 
-    public List<BoardPosition> getBoardPositions() {
-        return boardPositions;
+    public List<Block> getBoardPositions() {
+        return blocks;
     }
 
     public TypesOfLoa getType() {
@@ -28,16 +28,16 @@ public class LineOfAction {
         if (o == null || getClass() != o.getClass()) return false;
         LineOfAction that = (LineOfAction) o;
         return type == that.type &&
-                Objects.equals(boardPositions, that.boardPositions);
+                Objects.equals(blocks, that.blocks);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(boardPositions);
+        return Objects.hash(blocks);
     }
 
     @Override
     public String toString() {
-        return "LOA(" + type + ") - " + boardPositions;
+        return "LOA(" + type + ") - " + blocks;
     }
 }

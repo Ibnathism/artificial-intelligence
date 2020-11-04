@@ -2,13 +2,13 @@ import java.util.ArrayList;
 
 public class GamePlay {
     private LineOfActionFactory loaFactory;
-    private BoardPosition[][] board;
+    private Block[][] board;
     private Player black;
     private Player white;
 
     public GamePlay() {
         loaFactory = new LineOfActionFactory();
-        board = new BoardPosition[Constants.DIMENSION][Constants.DIMENSION];
+        board = new Block[Constants.DIMENSION][Constants.DIMENSION];
         black = new Player(Constants.BLACK_TYPE);
         white = new Player(Constants.WHITE_TYPE);
         initializeBoard();
@@ -18,8 +18,9 @@ public class GamePlay {
     }
 
     public boolean gameMove(Move move) {
-        BoardPosition prev = board[move.initPosition.getRow()][move.initPosition.getColumn()];
-        BoardPosition next = board[move.finalPosition.getRow()][move.finalPosition.getColumn()];
+        boolean isPossible = false;
+        Block prev = board[move.initPosition.getRow()][move.initPosition.getColumn()];
+        Block next = board[move.finalPosition.getRow()][move.finalPosition.getColumn()];
 
         prev.setCondition(Constants.EMPTY);
         next.setCondition(move.playerType);
@@ -38,10 +39,71 @@ public class GamePlay {
         }
 
         //TODO: Check checkers that are situated in between
+        //isPossible = checkValidity(specific, prev, next);
         //TODO: Capture checkers of opponent
 
         return true;
 
+    }
+
+    private boolean checkValidity(LineOfAction specificLoa, Block prev, Block next) {
+        int count;
+        String type;
+        if (specificLoa.getType().equals(TypesOfLoa.HORIZONTAL)) {
+            count = Math.abs(next.getColumn()-prev.getColumn());
+            if (count!=prev.getHorizontal().checkerCount) return false;
+            if (prev.getColumn()<next.getColumn()) {
+                for (int i = prev.getColumn(); i < next.getColumn() ; i++) {
+                    type = board[prev.getRow()][i].getCondition();
+                    if(!type.equals(prev.getCondition()) && !type.equals(Constants.EMPTY)) return false;
+                }
+            }
+            if (prev.getColumn()>next.getColumn()) {
+                for (int i = next.getColumn(); i >prev.getColumn() ; i--) {
+                    type = board[prev.getRow()][i].getCondition();
+                    if(!type.equals(prev.getCondition()) && !type.equals(Constants.EMPTY)) return false;
+                }
+            }
+
+        }
+        if (specificLoa.getType().equals(TypesOfLoa.VERTICAL)) {
+            count = Math.abs(next.getRow()-prev.getRow());
+            if (count!=prev.getVertical().checkerCount) return false;
+            if (prev.getRow()<next.getRow()) {
+                for (int i = prev.getRow(); i < next.getRow(); i++) {
+                    type = board[i][prev.getColumn()].getCondition();
+                    if (!type.equals(prev.getCondition()) && !type.equals(Constants.EMPTY)) return false;
+                }
+            }
+            if (prev.getRow()>next.getRow()) {
+                for (int i = next.getRow(); i > prev.getRow() ; i--) {
+                    type = board[i][prev.getColumn()].getCondition();
+                    if (!type.equals(prev.getCondition()) && !type.equals(Constants.EMPTY)) return false;
+                }
+            }
+        }
+        if (specificLoa.getType().equals(TypesOfLoa.LEADING_DIAGONAL)) {
+            count = 0;
+            if (prev.getRow()<next.getRow() && prev.getColumn()<next.getColumn()) {
+                for (int i = prev.getRow(),j = prev.getColumn(); i < next.getRow() && j < next.getColumn(); i++, j++) {
+                    count++;
+                    if (count>prev.getLeadingDiagonal().checkerCount) return false;
+                    type = board[i][j].getCondition();
+                    if (!type.equals(prev.getCondition()) && !type.equals(Constants.EMPTY)) return false;
+                }
+            }
+            if (prev.getRow()>next.getRow() && prev.getColumn()>next.getColumn()) {
+                for (int i = next.getRow(),j = next.getColumn(); i > prev.getRow() && j > prev.getColumn(); i--, j--) {
+                    count++;
+                    if (count>prev.getLeadingDiagonal().checkerCount) return false;
+                    type = board[i][j].getCondition();
+                    if (!type.equals(prev.getCondition()) && !type.equals(Constants.EMPTY)) return false;
+                }
+            }
+            if (count!=prev.getLeadingDiagonal().checkerCount) return false;
+        }
+
+        return false;
     }
 
     private void initializeBlack() {
@@ -72,14 +134,14 @@ public class GamePlay {
         }
     }
 
-    public BoardPosition[][] getBoard() {
+    public Block[][] getBoard() {
         return board;
     }
 
     private void initializeBoard() {
         for (int i = 0; i < Constants.DIMENSION; i++) {
             for (int j = 0; j < Constants.DIMENSION; j++) {
-                board[i][j] = new BoardPosition(i,j);
+                board[i][j] = new Block(i,j);
                 board[i][j].setCondition(Constants.EMPTY);
             }
         }

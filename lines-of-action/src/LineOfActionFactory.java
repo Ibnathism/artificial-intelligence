@@ -4,7 +4,7 @@ import java.util.HashMap;
 public class LineOfActionFactory {
     private HashMap<String, LineOfAction> loaMap = new HashMap<>();
 
-    public LineOfAction getLoa(TypesOfLoa type, BoardPosition position, GamePlay gamePlay) {
+    public LineOfAction getLoa(TypesOfLoa type, Block position, GamePlay gamePlay) {
         ArrayList<Point> loaPoints = findCoordinates(type, position);
         LineOfAction loa = loaMap.get(loaPoints.toString());
 
@@ -20,7 +20,7 @@ public class LineOfActionFactory {
         else return loa;
     }
 
-    private ArrayList<Point> findCoordinates(TypesOfLoa type, BoardPosition position){
+    private ArrayList<Point> findCoordinates(TypesOfLoa type, Block position){
         int myRow = position.getRow();
         int myCol = position.getColumn();
 
