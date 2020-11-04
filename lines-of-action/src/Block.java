@@ -62,7 +62,7 @@ public class Block {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Block that = (Block) o;
-        return row == that.row &&
+        return condition.equals(that.condition) && row == that.row &&
                 column == that.column;
     }
 

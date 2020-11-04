@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
@@ -26,7 +27,10 @@ public class Main {
                     Block init = game.getBoard()[Integer.parseInt(input.split(":")[1].split(",")[0])][Integer.parseInt(input.split(":")[1].split(",")[1])];
                     Block next = game.getBoard()[Integer.parseInt(input.split(":")[2].split(",")[0])][Integer.parseInt(input.split(":")[2].split(",")[1])];
                     Move move = new Move(playerType, init, next);
-                    game.gameMove(move);
+                    ArrayList<Move> possibleMoves = game.getPossibleMoves(init);
+                    boolean canMove = game.gameMove(move, possibleMoves);
+                    if (canMove) System.out.println("Move Successful");
+                    else System.out.println("Invalid Move");
                     break;
                 case 2:
                     System.out.println("Format : row:col");
@@ -46,7 +50,10 @@ public class Main {
                     input = scanner.next();
                     row = Integer.parseInt(input.split(",")[0]);
                     col = Integer.parseInt(input.split(",")[1]);
-                    game.getPossibleMoves(game.getBoard()[row][col]);
+                    possibleMoves = game.getPossibleMoves(game.getBoard()[row][col]);
+                    for (Move m: possibleMoves) {
+                        System.out.println(m);
+                    }
                 default:
                     break;
             }

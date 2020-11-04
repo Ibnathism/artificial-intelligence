@@ -18,16 +18,31 @@ public class GamePlay {
         initializeBlack();
     }
 
-    public boolean gameMove(Move move) {
-        boolean isPossible = false;
+    public boolean gameMove(Move move, ArrayList<Move> possibleMoves) {
+
+        if (!possibleMoves.contains(move)) {
+            System.out.println("Doesn't contain in Possible Moves");
+            return false;
+        }
+
         Block prev = board[move.initPosition.getRow()][move.initPosition.getColumn()];
         Block next = board[move.finalPosition.getRow()][move.finalPosition.getColumn()];
 
         prev.setCondition(Constants.EMPTY);
-        next.setCondition(move.playerType);
+        if (prev.getCondition().equals(next.getCondition())) {
+            System.out.println("You can't land on your own checker");
+            return false;
+        }
+        else {
+            if (!next.getCondition().equals(Constants.EMPTY))  capture(next);
+            next.setCondition(move.playerType);
+        }
 
         LineOfAction specific = prev.findSpecificLoa(next);
-        if (specific == null) return false;
+        if (specific == null) {
+            System.out.println("This is not a line of action");
+            return false;
+        }
 
         ArrayList<LineOfAction> othersOfPrev = prev.findEffectedLoaList(specific);
         for (LineOfAction loa: othersOfPrev) {
@@ -38,10 +53,6 @@ public class GamePlay {
         for (LineOfAction loa: othersOfNext) {
             loa.checkerCount++;
         }
-
-        //TODO: Check checkers that are situated in between
-        //isPossible = checkValidity(specific, prev, next);
-        //TODO: Capture checkers of opponent
 
         return true;
 
@@ -68,7 +79,6 @@ public class GamePlay {
             }
             if (isPossible && i==temp) {
                 type = board[current.getRow()][i].getCondition();
-                if (!type.equals(current.getCondition()) && !type.equals(Constants.EMPTY)) capture();
                 moves.add(new Move(current.getCondition(), current, board[current.getRow()][temp]));
             }
         }
@@ -85,7 +95,6 @@ public class GamePlay {
             }
             if (isPossible && i==temp) {
                 type = board[current.getRow()][i].getCondition();
-                if (!type.equals(current.getCondition()) && !type.equals(Constants.EMPTY)) capture();
                 moves.add(new Move(current.getCondition(), current, board[current.getRow()][temp]));
             }
         }
@@ -107,7 +116,6 @@ public class GamePlay {
             }
             if (isPossible && i==temp) {
                 type = board[i][current.getColumn()].getCondition();
-                if (!type.equals(current.getCondition()) && !type.equals(Constants.EMPTY)) capture();
                 moves.add(new Move(current.getCondition(), current, board[temp][current.getColumn()]));
             }
         }
@@ -124,7 +132,6 @@ public class GamePlay {
             }
             if (isPossible && i==temp) {
                 type = board[i][current.getColumn()].getCondition();
-                if (!type.equals(current.getCondition()) && !type.equals(Constants.EMPTY)) capture();
                 moves.add(new Move(current.getCondition(), current, board[temp][current.getColumn()]));
             }
         }
@@ -145,9 +152,9 @@ public class GamePlay {
         Move rightCounterMove = getOneSideMove(specific, current, false);
         if (rightCounterMove!=null) moves.add(rightCounterMove);
 
-        for (Move m: moves) {
+        /*for (Move m: moves) {
             System.out.println(m);
-        }
+        }*/
 
         return moves;
     }
@@ -161,23 +168,28 @@ public class GamePlay {
         while(i<=count) {
             if (isLeft) index--;
             else index++;
-            if (index<0 || index>=Constants.DIMENSION) break;
+            if (index<0 || index>=Constants.DIMENSION || index>=tempBlocks.size()) break;
             Block intermediary = tempBlocks.get(index);
             i++;
             if (i==count) {
                 if (intermediary.getCondition().equals(current.getCondition())) break; //same color
-                else if (intermediary.getCondition().equals(Constants.EMPTY)) return new Move(current.getCondition(), current, intermediary);
-                else {
-                    capture();
-                    return new Move(current.getCondition(), current, intermediary);
-                }
+                else return new Move(current.getCondition(), current, intermediary);
+
             }
-            if (!intermediary.getCondition().equals(current.getCondition()) && !intermediary.getCondition().equals(Constants.EMPTY)) break;
+            else {
+                if (!intermediary.getCondition().equals(current.getCondition()) && !intermediary.getCondition().equals(Constants.EMPTY)) break;
+            }
+
         }
         return null;
     }
 
-    private void capture() {
+    private void capture(Block captured) {
+        captured.getHorizontal().checkerCount--;
+        captured.getVertical().checkerCount--;
+        captured.getLeadingDiagonal().checkerCount--;
+        captured.getCounterDiagonal().checkerCount--;
+
 
     }
 
