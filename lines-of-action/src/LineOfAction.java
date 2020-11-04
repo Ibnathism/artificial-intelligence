@@ -5,7 +5,7 @@ import java.util.Objects;
 public class LineOfAction {
     private TypesOfLoa type;
     int checkerCount;
-    private List<Block> blocks;
+    private ArrayList<Block> blocks;
 
     public LineOfAction(TypesOfLoa type) {
         this.type = type;
@@ -20,6 +20,10 @@ public class LineOfAction {
 
     public TypesOfLoa getType() {
         return type;
+    }
+
+    public ArrayList<Block> getBlocks() {
+        return blocks;
     }
 
     @Override

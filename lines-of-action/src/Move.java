@@ -8,4 +8,9 @@ public class Move {
         this.initPosition = initPosition;
         this.finalPosition = finalPosition;
     }
+
+    @Override
+    public String toString() {
+        return "{" + playerType + ", " + initPosition + ", " + finalPosition + "}";
+    }
 }

@@ -13,7 +13,8 @@ public class Main {
             System.out.println("1. Move");
             System.out.println("2. Checker Count");
             System.out.println("3. Print Board");
-            System.out.println("4. Exit");
+            System.out.println("4. Show Possible Moves");
+            System.out.println("5. Exit");
 
             choice = scanner.nextInt();
 
@@ -40,10 +41,16 @@ public class Main {
                 case 3:
                     System.out.println(game.printBoard());
                     break;
+                case 4:
+                    System.out.println("Format : row,col");
+                    input = scanner.next();
+                    row = Integer.parseInt(input.split(",")[0]);
+                    col = Integer.parseInt(input.split(",")[1]);
+                    game.getPossibleMoves(game.getBoard()[row][col]);
                 default:
                     break;
             }
-            if (choice==4) break;
+            if (choice==5) break;
         }
 
     }

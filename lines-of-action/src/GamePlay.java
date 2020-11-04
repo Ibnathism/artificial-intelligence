@@ -1,3 +1,4 @@
+import java.awt.*;
 import java.util.ArrayList;
 
 public class GamePlay {
@@ -46,65 +47,140 @@ public class GamePlay {
 
     }
 
-    private boolean checkValidity(LineOfAction specificLoa, Block prev, Block next) {
-        int count;
+    public ArrayList<Move> getPossibleMoves(Block current) {
+        ArrayList<Move> moves = new ArrayList<>();
+
+
+        LineOfAction specific = current.getHorizontal();
+        int count = specific.checkerCount;
         String type;
-        if (specificLoa.getType().equals(TypesOfLoa.HORIZONTAL)) {
-            count = Math.abs(next.getColumn()-prev.getColumn());
-            if (count!=prev.getHorizontal().checkerCount) return false;
-            if (prev.getColumn()<next.getColumn()) {
-                for (int i = prev.getColumn(); i < next.getColumn() ; i++) {
-                    type = board[prev.getRow()][i].getCondition();
-                    if(!type.equals(prev.getCondition()) && !type.equals(Constants.EMPTY)) return false;
+        int i;
+        boolean isPossible = true;
+        int temp = current.getColumn()-count;
+        if (temp >= 0) {
+            //left move
+            for (i = current.getColumn(); i > temp ; i--) {
+                type = board[current.getRow()][i].getCondition();
+                if (!type.equals(current.getCondition()) && !type.equals(Constants.EMPTY)) {
+                    isPossible = false;
+                    break;
                 }
             }
-            if (prev.getColumn()>next.getColumn()) {
-                for (int i = next.getColumn(); i >prev.getColumn() ; i--) {
-                    type = board[prev.getRow()][i].getCondition();
-                    if(!type.equals(prev.getCondition()) && !type.equals(Constants.EMPTY)) return false;
-                }
-            }
-
-        }
-        if (specificLoa.getType().equals(TypesOfLoa.VERTICAL)) {
-            count = Math.abs(next.getRow()-prev.getRow());
-            if (count!=prev.getVertical().checkerCount) return false;
-            if (prev.getRow()<next.getRow()) {
-                for (int i = prev.getRow(); i < next.getRow(); i++) {
-                    type = board[i][prev.getColumn()].getCondition();
-                    if (!type.equals(prev.getCondition()) && !type.equals(Constants.EMPTY)) return false;
-                }
-            }
-            if (prev.getRow()>next.getRow()) {
-                for (int i = next.getRow(); i > prev.getRow() ; i--) {
-                    type = board[i][prev.getColumn()].getCondition();
-                    if (!type.equals(prev.getCondition()) && !type.equals(Constants.EMPTY)) return false;
-                }
+            if (isPossible && i==temp) {
+                type = board[current.getRow()][i].getCondition();
+                if (!type.equals(current.getCondition()) && !type.equals(Constants.EMPTY)) capture();
+                moves.add(new Move(current.getCondition(), current, board[current.getRow()][temp]));
             }
         }
-        if (specificLoa.getType().equals(TypesOfLoa.LEADING_DIAGONAL)) {
-            count = 0;
-            if (prev.getRow()<next.getRow() && prev.getColumn()<next.getColumn()) {
-                for (int i = prev.getRow(),j = prev.getColumn(); i < next.getRow() && j < next.getColumn(); i++, j++) {
-                    count++;
-                    if (count>prev.getLeadingDiagonal().checkerCount) return false;
-                    type = board[i][j].getCondition();
-                    if (!type.equals(prev.getCondition()) && !type.equals(Constants.EMPTY)) return false;
+        isPossible = true;
+        temp = current.getColumn()+count;
+        if (temp < Constants.DIMENSION) {
+            //right move
+            for (i = current.getColumn(); i < temp ; i++) {
+                type = board[current.getRow()][i].getCondition();
+                if (!type.equals(current.getCondition()) && !type.equals(Constants.EMPTY)) {
+                    isPossible = false;
+                    break;
                 }
             }
-            if (prev.getRow()>next.getRow() && prev.getColumn()>next.getColumn()) {
-                for (int i = next.getRow(),j = next.getColumn(); i > prev.getRow() && j > prev.getColumn(); i--, j--) {
-                    count++;
-                    if (count>prev.getLeadingDiagonal().checkerCount) return false;
-                    type = board[i][j].getCondition();
-                    if (!type.equals(prev.getCondition()) && !type.equals(Constants.EMPTY)) return false;
-                }
+            if (isPossible && i==temp) {
+                type = board[current.getRow()][i].getCondition();
+                if (!type.equals(current.getCondition()) && !type.equals(Constants.EMPTY)) capture();
+                moves.add(new Move(current.getCondition(), current, board[current.getRow()][temp]));
             }
-            if (count!=prev.getLeadingDiagonal().checkerCount) return false;
         }
 
-        return false;
+
+
+        specific = current.getVertical();
+        count = specific.checkerCount;
+        isPossible = true;
+        temp = current.getRow() - count;
+        if (temp >= 0) {
+            //up move
+            for (i = current.getRow(); i > temp ; i--) {
+                type = board[i][current.getColumn()].getCondition();
+                if (!type.equals(current.getCondition()) && !type.equals(Constants.EMPTY)) {
+                    isPossible = false;
+                    break;
+                }
+            }
+            if (isPossible && i==temp) {
+                type = board[i][current.getColumn()].getCondition();
+                if (!type.equals(current.getCondition()) && !type.equals(Constants.EMPTY)) capture();
+                moves.add(new Move(current.getCondition(), current, board[temp][current.getColumn()]));
+            }
+        }
+        isPossible = true;
+        temp = current.getRow() + count;
+        if (temp < Constants.DIMENSION) {
+            //down move
+            for (i = current.getRow(); i < temp ; i++) {
+                type = board[i][current.getColumn()].getCondition();
+                if (!type.equals(current.getCondition()) && !type.equals(Constants.EMPTY)) {
+                    isPossible = false;
+                    break;
+                }
+            }
+            if (isPossible && i==temp) {
+                type = board[i][current.getColumn()].getCondition();
+                if (!type.equals(current.getCondition()) && !type.equals(Constants.EMPTY)) capture();
+                moves.add(new Move(current.getCondition(), current, board[temp][current.getColumn()]));
+            }
+        }
+
+
+
+        specific = current.getLeadingDiagonal();
+        Move leftLeadingMove = getOneSideMove(specific, current, true);
+        if (leftLeadingMove!=null) moves.add(leftLeadingMove);
+
+        Move rightLeadingMove = getOneSideMove(specific, current, false);
+        if (rightLeadingMove!=null) moves.add(rightLeadingMove);
+
+        specific = current.getCounterDiagonal();
+        Move leftCounterMove = getOneSideMove(specific, current, true);
+        if (leftCounterMove!=null) moves.add(leftCounterMove);
+
+        Move rightCounterMove = getOneSideMove(specific, current, false);
+        if (rightCounterMove!=null) moves.add(rightCounterMove);
+
+        for (Move m: moves) {
+            System.out.println(m);
+        }
+
+        return moves;
     }
+
+
+    private Move getOneSideMove(LineOfAction specific, Block current, Boolean isLeft) {
+        ArrayList<Block> tempBlocks = specific.getBlocks();
+        int index = tempBlocks.indexOf(current);
+        int count = specific.checkerCount;
+        int i = 0;
+        while(i<=count) {
+            if (isLeft) index--;
+            else index++;
+            if (index<0 || index>=Constants.DIMENSION) break;
+            Block intermediary = tempBlocks.get(index);
+            i++;
+            if (i==count) {
+                if (intermediary.getCondition().equals(current.getCondition())) break; //same color
+                else if (intermediary.getCondition().equals(Constants.EMPTY)) return new Move(current.getCondition(), current, intermediary);
+                else {
+                    capture();
+                    return new Move(current.getCondition(), current, intermediary);
+                }
+            }
+            if (!intermediary.getCondition().equals(current.getCondition()) && !intermediary.getCondition().equals(Constants.EMPTY)) break;
+        }
+        return null;
+    }
+
+    private void capture() {
+
+    }
+
 
     private void initializeBlack() {
         for (int i = 1; i < Constants.DIMENSION-1; i++) {
