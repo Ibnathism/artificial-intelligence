@@ -1,13 +1,13 @@
 import java.util.ArrayList;
 
 public class GamePlay {
-    private LineOfActionFactory loaFactory;
+    private GamePlayUtil loaFactory;
     private Block[][] board;
     private Player black;
     private Player white;
 
     public GamePlay() {
-        loaFactory = new LineOfActionFactory();
+        loaFactory = new GamePlayUtil();
         board = new Block[Constants.DIMENSION][Constants.DIMENSION];
         black = new Player(Constants.BLACK_TYPE);
         white = new Player(Constants.WHITE_TYPE);

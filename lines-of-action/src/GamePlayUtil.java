@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class LineOfActionFactory {
+public class GamePlayUtil {
     private HashMap<String, LineOfAction> loaMap = new HashMap<>();
 
     public LineOfAction getLoa(TypesOfLoa type, Block position, GamePlay gamePlay) {
