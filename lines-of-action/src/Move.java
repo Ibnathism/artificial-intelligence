@@ -11,6 +11,10 @@ public class Move {
         this.finalPosition = finalPosition;
     }
 
+    public String getPlayerType() {
+        return playerType;
+    }
+
     @Override
     public String toString() {
         return "{" + playerType + ", " + initPosition + ", " + finalPosition + "}";

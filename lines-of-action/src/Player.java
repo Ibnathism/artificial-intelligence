@@ -3,14 +3,14 @@ import java.util.List;
 
 public class Player {
     private String type;
-    private List<Block> boardPositionsOfMyType;
+    private List<Block> blockList;
 
     public Player(String type) {
         this.type = type;
-        boardPositionsOfMyType = new ArrayList<>();
+        blockList = new ArrayList<>();
     }
 
-    public List<Block> getBoardPositionsOfMyType() {
-        return boardPositionsOfMyType;
+    public List<Block> getBlockList() {
+        return blockList;
     }
 }
