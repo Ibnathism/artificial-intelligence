@@ -6,7 +6,7 @@ public class Main {
         GamePlay game = new GamePlay();
         game.initializeBoard();
         System.out.println("\n:::::::::: LINES OF ACTION :::::::::::\n");
-        System.out.println(game.printBoard());
+        System.out.println(game);
         Scanner scanner = new Scanner(System.in);
         int choice;
         String input;
@@ -48,7 +48,7 @@ public class Main {
                     System.out.println("Counter Diagonal : "+ game.getBlocks()[row][col].getCounterDiagonal().checkerCount);
                     break;
                 case 3:
-                    System.out.println(game.printBoard());
+                    System.out.println(game);
                     break;
                 case 4:
                     System.out.println("Format : row,col");
@@ -63,7 +63,7 @@ public class Main {
                 case 5:
                     System.out.println("CLONING");
                     gameNode = GameNode.copyGame(game);
-                    System.out.println(gameNode.printBoard());
+                    System.out.println(gameNode);
                     break;
                 case 6:
                     System.out.println("Format : (W/B):row,col:final_row,final_col");
@@ -80,7 +80,7 @@ public class Main {
                     break;
                 case 7:
                     //gameNode = GameNode.copyGame(game);
-                    System.out.println(gameNode.printBoard());
+                    System.out.println(gameNode);
                 default:
                     break;
             }

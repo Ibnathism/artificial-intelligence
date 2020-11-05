@@ -26,7 +26,9 @@ public class GamePlay {
         this.white = white;
     }
 
-
+    public Block[][] getBlocks() {
+        return blocks;
+    }
 
     public GamePlayUtil getGamePlayUtil() {
         return gamePlayUtil;
@@ -182,7 +184,6 @@ public class GamePlay {
         return moves;
     }
 
-
     private Move getOneSideMove(LineOfAction specific, Block current, Boolean isLeft) {
         ArrayList<Block> tempBlocks = specific.getBlocks();
         int index = tempBlocks.indexOf(current);
@@ -235,10 +236,6 @@ public class GamePlay {
         }
     }
 
-    public Block[][] getBlocks() {
-        return blocks;
-    }
-
     public void initializeBoard() {
         for (int i = 0; i < Constants.DIMENSION; i++) {
             for (int j = 0; j < Constants.DIMENSION; j++) {
@@ -276,7 +273,8 @@ public class GamePlay {
         return Arrays.deepHashCode(blocks);
     }
 
-    public String printBoard() {
+    @Override
+    public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(" ").append(" ").append(" ").append(" ");
         for (int i = 0; i < Constants.DIMENSION; i++) {
@@ -295,6 +293,4 @@ public class GamePlay {
         }
         return stringBuilder.toString();
     }
-
-
 }
