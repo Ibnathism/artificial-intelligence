@@ -20,6 +20,10 @@ public class GamePlayUtil {
         else return loa;
     }
 
+    public HashMap<String, LineOfAction> getLoaMap() {
+        return loaMap;
+    }
+
     private ArrayList<Point> findCoordinates(TypesOfLoa type, Block position){
         int myRow = position.getRow();
         int myCol = position.getColumn();

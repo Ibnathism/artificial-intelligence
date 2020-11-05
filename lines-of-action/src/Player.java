@@ -13,4 +13,8 @@ public class Player {
     public List<Block> getBlockList() {
         return blockList;
     }
+
+    public void setBlockList(List<Block> blockList) {
+        this.blockList = blockList;
+    }
 }

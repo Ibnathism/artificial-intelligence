@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Objects;
 
 public class GamePlay {
     private GamePlayUtil gamePlayUtil;
@@ -11,9 +13,27 @@ public class GamePlay {
         board = new Block[Constants.DIMENSION][Constants.DIMENSION];
         black = new Player(Constants.BLACK_TYPE);
         white = new Player(Constants.WHITE_TYPE);
-        initializeBoard();
 
 
+
+    }
+
+    public void setBoard(Block[][] board) {
+        this.board = board;
+    }
+
+    public void setBlack(Player black) {
+        this.black = black;
+    }
+
+    public void setWhite(Player white) {
+        this.white = white;
+    }
+
+
+
+    public GamePlayUtil getGamePlayUtil() {
+        return gamePlayUtil;
     }
 
     public boolean gameMove(Move move, ArrayList<Move> possibleMoves) {
@@ -223,7 +243,7 @@ public class GamePlay {
         return board;
     }
 
-    private void initializeBoard() {
+    public void initializeBoard() {
         for (int i = 0; i < Constants.DIMENSION; i++) {
             for (int j = 0; j < Constants.DIMENSION; j++) {
                 board[i][j] = new Block(i,j);
@@ -231,9 +251,11 @@ public class GamePlay {
             }
         }
         initializeLineOfAction();
+        initializeWhite();
+        initializeBlack();
     }
 
-    private void initializeLineOfAction() {
+    public void initializeLineOfAction() {
         for (int i = 0; i < Constants.DIMENSION; i++) {
             for (int j = 0; j < Constants.DIMENSION; j++) {
                 board[i][j].setHorizontal(gamePlayUtil.getLoa(TypesOfLoa.HORIZONTAL, board[i][j], this));
@@ -242,8 +264,20 @@ public class GamePlay {
                 board[i][j].setCounterDiagonal(gamePlayUtil.getLoa(TypesOfLoa.COUNTER_DIAGONAL, board[i][j], this));
             }
         }
-        initializeWhite();
-        initializeBlack();
+
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        GamePlay gamePlay = (GamePlay) o;
+        return Arrays.deepEquals(board, ((GamePlay) o).board);
+    }
+
+    @Override
+    public int hashCode() {
+        return Arrays.deepHashCode(board);
     }
 
     public String printBoard() {
@@ -265,4 +299,6 @@ public class GamePlay {
         }
         return stringBuilder.toString();
     }
+
+
 }
