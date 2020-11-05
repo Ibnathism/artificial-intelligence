@@ -35,6 +35,14 @@ public class GamePlay {
         return gamePlayUtil;
     }
 
+    public Player getBlack() {
+        return black;
+    }
+
+    public Player getWhite() {
+        return white;
+    }
+
     public boolean gameMove(Move move, ArrayList<Move> possibleMoves) {
 
         if (!possibleMoves.contains(move)) {
@@ -209,77 +217,7 @@ public class GamePlay {
         return null;
     }
 
-    public int runMinimaxAlgorithm(GamePlay gamePlay, int depth, int alpha, int beta, boolean isMaximizingPlayer) {
-        if (depth == 0 || isGameOver(gamePlay)) {
-            //System.out.println("Depth reached");
-            return getStaticEvaluation(gamePlay, white, black);
-        }
-        int eval;
-        if (isMaximizingPlayer) {
-            int maxEval = Integer.MIN_VALUE;
-            ArrayList<GamePlay> childrenOfMax = gamePlay.getChildren();
-            for(GamePlay gp: childrenOfMax) {
-                eval = runMinimaxAlgorithm(gp, depth-1, alpha, beta, false);
-                maxEval = Integer.max(maxEval, eval);
-                alpha = Integer.max(alpha, eval);
-                if (beta <= alpha) break;
-            }
-            return maxEval;
-        }
-        else {
-            int minEval = Integer.MAX_VALUE;
-            ArrayList<GamePlay> childrenOfMin = gamePlay.getChildren();
-            for (GamePlay gp: childrenOfMin) {
-                eval = runMinimaxAlgorithm(gp, depth-1, alpha, beta, true);
-                minEval = Integer.min(minEval, eval);
-                beta = Integer.min(beta, eval);
-                if (beta <= alpha) break;
-            }
-            return minEval;
-        }
-
-    }
-
-    public void startPlaying() {
-        boolean isWhitesTurn = false;
-        for (int i = 0; i < 10; i++) {
-            if (!isWhitesTurn) {
-                System.out.println("Black's turn");
-                ArrayList<GamePlay> possibleMoves = getChildren();
-                int min = Integer.MAX_VALUE;
-                GamePlay minGamePlay = this;
-                for (GamePlay gamePlay: possibleMoves) {
-                    int miniMax = runMinimaxAlgorithm(gamePlay, Constants.DEPTH, Integer.MIN_VALUE, Integer.MAX_VALUE, false);
-                    //System.out.println("  "+ miniMax);
-                    if (miniMax<min){
-                        min = miniMax;
-                        minGamePlay = gamePlay;
-                    }
-                }
-                System.out.println(minGamePlay);
-
-                isWhitesTurn = true;
-            }
-            else {
-                System.out.println("White's turn");
-                Scanner scanner = new Scanner(System.in);
-                String input;
-                System.out.println("Format : (W/B):row,col:final_row,final_col");
-                input = scanner.next();
-                String playerType = input.split(":")[0];
-                Block init = this.getBlocks()[Integer.parseInt(input.split(":")[1].split(",")[0])][Integer.parseInt(input.split(":")[1].split(",")[1])];
-                Block next = this.getBlocks()[Integer.parseInt(input.split(":")[2].split(",")[0])][Integer.parseInt(input.split(":")[2].split(",")[1])];
-                Move move = new Move(playerType, init, next);
-                ArrayList<Move> possibleMoves = this.getPossibleMoves(init);
-                boolean canMove = this.gameMove(move, possibleMoves);
-                if (canMove) System.out.println("Move Successful");
-                else System.out.println("Invalid Move");
-                isWhitesTurn = false;
-            }
-        }
-    }
-
-    private ArrayList<GamePlay> getChildren() {
+    public ArrayList<GamePlay> getChildren() {
         ArrayList<GamePlay> possibleMoves = new ArrayList<>();
         for (Block piece:black.getBlockList()) {
             GamePlay tempGameNode = GameNode.copyGame(this);
@@ -295,32 +233,7 @@ public class GamePlay {
         return possibleMoves;
     }
 
-    private boolean isGameOver(GamePlay gamePlay) {
-        //TODO
-        return false;
-    }
 
-    public int getStaticEvaluation(GamePlay gamePlay, Player white, Player black) {
-        //TODO improvement
-        int[][] vals = {{-80, -25, -20, -20, -20, -20, -25, -80},
-                {-25,  10,  10,  10,  10,  10,  10,  -25},
-                {-20,  10,  25,  25,  25,  25,  10,  -20},
-                {-20,  10,  25,  50,  50,  25,  10,  -20},
-                {-20,  10,  25,  50,  50,  25,  10,  -20},
-                {-20,  10,  25,  25,  25,  25,  10,  -20},
-                {-25,  10,  10,  10,  10,  10,  10,  -25},
-                {-80, -25, -20, -20, -20, -20, -25, -80}};
-        int se = 0;
-        int whiteSum = 0;
-        int blackSum = 0;
-        for (Block block:black.getBlockList()) {
-            blackSum = blackSum + vals[block.getRow()][block.getColumn()];
-        }
-        for (Block block:white.getBlockList()) {
-            whiteSum = whiteSum + vals[block.getRow()][block.getColumn()];
-        }
-        return whiteSum - blackSum;
-    }
 
 
     private void initializeBlack() {

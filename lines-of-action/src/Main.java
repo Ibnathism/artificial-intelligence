@@ -84,7 +84,13 @@ public class Main {
                     System.out.println(gameNode);
                     break;
                 case 8:
-                    game.startPlaying();
+                    boolean isWhitesTurn;
+                    for (int i = 0; i < 10; i++) {
+                        isWhitesTurn = i % 2 != 0;
+                        gameNode = GameNode.copyGame(game);
+                        game = GameNode.startPlaying(isWhitesTurn, gameNode);
+                    }
+
                     break;
                 default:
                     break;

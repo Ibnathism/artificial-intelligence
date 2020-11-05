@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Scanner;
 
 public class GameNode {
     public static GamePlay copyGame(GamePlay gamePlay) {
@@ -41,5 +42,103 @@ public class GameNode {
             newLoa.checkerCount = ((LineOfAction)entry.getValue()).checkerCount;
         }
         return newGameNode;
+    }
+
+    public static  GamePlay startPlaying(boolean isWhitesTurn, GamePlay game) {
+        if (!isWhitesTurn) {
+            System.out.println("Black's turn");
+            ArrayList<GamePlay> possibleMoves = game.getChildren();
+            int min = Integer.MAX_VALUE;
+            GamePlay minGamePlay = null;
+            for (GamePlay gamePlay: possibleMoves) {
+                int miniMax = runMinimaxAlgorithm(gamePlay, Constants.DEPTH, Integer.MIN_VALUE, Integer.MAX_VALUE, false);
+                //System.out.println("  "+ miniMax);
+                if (miniMax<min){
+                    min = miniMax;
+                    minGamePlay = gamePlay;
+                }
+            }
+            System.out.println(minGamePlay);
+            //this.blocks = minGamePlay.blocks;
+            return minGamePlay;
+
+        }
+        System.out.println("White's turn");
+        Scanner scanner = new Scanner(System.in);
+        String input;
+        System.out.println("Format : (W/B):row,col:final_row,final_col");
+        input = scanner.next();
+        String playerType = input.split(":")[0];
+        Block init = game.getBlocks()[Integer.parseInt(input.split(":")[1].split(",")[0])][Integer.parseInt(input.split(":")[1].split(",")[1])];
+        Block next = game.getBlocks()[Integer.parseInt(input.split(":")[2].split(",")[0])][Integer.parseInt(input.split(":")[2].split(",")[1])];
+        Move move = new Move(playerType, init, next);
+        ArrayList<Move> possibleMoves = game.getPossibleMoves(init);
+        boolean canMove = game.gameMove(move, possibleMoves);
+        if (canMove) {
+            System.out.println("Move Successful");
+            System.out.println(game);
+        }
+        else System.out.println("Invalid Move");
+        return game;
+    }
+
+
+
+    private static boolean isGameOver(GamePlay gamePlay) {
+        //TODO
+        return false;
+    }
+
+    public static int getStaticEvaluation(GamePlay gamePlay, Player white, Player black) {
+        //TODO improvement
+        int[][] val = {{-80, -25, -20, -20, -20, -20, -25, -80},
+                {-25,  10,  10,  10,  10,  10,  10,  -25},
+                {-20,  10,  25,  25,  25,  25,  10,  -20},
+                {-20,  10,  25,  50,  50,  25,  10,  -20},
+                {-20,  10,  25,  50,  50,  25,  10,  -20},
+                {-20,  10,  25,  25,  25,  25,  10,  -20},
+                {-25,  10,  10,  10,  10,  10,  10,  -25},
+                {-80, -25, -20, -20, -20, -20, -25, -80}};
+        int se = 0;
+        int whiteSum = 0;
+        int blackSum = 0;
+        for (Block block:black.getBlockList()) {
+            blackSum = blackSum + val[block.getRow()][block.getColumn()];
+        }
+        for (Block block:white.getBlockList()) {
+            whiteSum = whiteSum + val[block.getRow()][block.getColumn()];
+        }
+        return whiteSum - blackSum;
+    }
+
+    public static int runMinimaxAlgorithm(GamePlay gamePlay, int depth, int alpha, int beta, boolean isMaximizingPlayer) {
+        if (depth == 0 || isGameOver(gamePlay)) {
+            //System.out.println("Depth reached");
+            return getStaticEvaluation(gamePlay, gamePlay.getWhite(), gamePlay.getBlack());
+        }
+        int eval;
+        if (isMaximizingPlayer) {
+            int maxEval = Integer.MIN_VALUE;
+            ArrayList<GamePlay> childrenOfMax = gamePlay.getChildren();
+            for(GamePlay gp: childrenOfMax) {
+                eval = runMinimaxAlgorithm(gp, depth-1, alpha, beta, false);
+                maxEval = Integer.max(maxEval, eval);
+                alpha = Integer.max(alpha, eval);
+                if (beta <= alpha) break;
+            }
+            return maxEval;
+        }
+        else {
+            int minEval = Integer.MAX_VALUE;
+            ArrayList<GamePlay> childrenOfMin = gamePlay.getChildren();
+            for (GamePlay gp: childrenOfMin) {
+                eval = runMinimaxAlgorithm(gp, depth-1, alpha, beta, true);
+                minEval = Integer.min(minEval, eval);
+                beta = Integer.min(beta, eval);
+                if (beta <= alpha) break;
+            }
+            return minEval;
+        }
+
     }
 }
