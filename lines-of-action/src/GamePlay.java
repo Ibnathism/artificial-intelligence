@@ -1,25 +1,21 @@
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Objects;
 
 public class GamePlay {
     private GamePlayUtil gamePlayUtil;
-    private Block[][] board;
+    private Block[][] blocks;
     private Player black;
     private Player white;
 
     public GamePlay() {
         gamePlayUtil = new GamePlayUtil();
-        board = new Block[Constants.DIMENSION][Constants.DIMENSION];
+        blocks = new Block[Constants.DIMENSION][Constants.DIMENSION];
         black = new Player(Constants.BLACK_TYPE);
         white = new Player(Constants.WHITE_TYPE);
-
-
-
     }
 
-    public void setBoard(Block[][] board) {
-        this.board = board;
+    public void setBlocks(Block[][] blocks) {
+        this.blocks = blocks;
     }
 
     public void setBlack(Player black) {
@@ -43,12 +39,12 @@ public class GamePlay {
             return false;
         }
 
-        Block prev = board[move.initPosition.getRow()][move.initPosition.getColumn()];
+        Block prev = blocks[move.initPosition.getRow()][move.initPosition.getColumn()];
         String typeOfPlayer = move.getPlayerType();
         String typeOfOtherPlayer;
         if (typeOfPlayer.equals(Constants.WHITE_TYPE)) typeOfOtherPlayer = Constants.BLACK_TYPE;
         else typeOfOtherPlayer = Constants.WHITE_TYPE;
-        Block next = board[move.finalPosition.getRow()][move.finalPosition.getColumn()];
+        Block next = blocks[move.finalPosition.getRow()][move.finalPosition.getColumn()];
 
 
         if (prev.getCondition().equals(next.getCondition())) {
@@ -98,15 +94,15 @@ public class GamePlay {
         if (temp >= 0) {
             //left move
             for (i = current.getColumn(); i > temp ; i--) {
-                type = board[current.getRow()][i].getCondition();
+                type = blocks[current.getRow()][i].getCondition();
                 if (!type.equals(current.getCondition()) && !type.equals(Constants.EMPTY)) {
                     isPossible = false;
                     break;
                 }
             }
             if (isPossible && i==temp) {
-                type = board[current.getRow()][i].getCondition();
-                moves.add(new Move(current.getCondition(), current, board[current.getRow()][temp]));
+                type = blocks[current.getRow()][i].getCondition();
+                moves.add(new Move(current.getCondition(), current, blocks[current.getRow()][temp]));
             }
         }
         isPossible = true;
@@ -114,15 +110,15 @@ public class GamePlay {
         if (temp < Constants.DIMENSION) {
             //right move
             for (i = current.getColumn(); i < temp ; i++) {
-                type = board[current.getRow()][i].getCondition();
+                type = blocks[current.getRow()][i].getCondition();
                 if (!type.equals(current.getCondition()) && !type.equals(Constants.EMPTY)) {
                     isPossible = false;
                     break;
                 }
             }
             if (isPossible && i==temp) {
-                type = board[current.getRow()][i].getCondition();
-                moves.add(new Move(current.getCondition(), current, board[current.getRow()][temp]));
+                type = blocks[current.getRow()][i].getCondition();
+                moves.add(new Move(current.getCondition(), current, blocks[current.getRow()][temp]));
             }
         }
 
@@ -135,15 +131,15 @@ public class GamePlay {
         if (temp >= 0) {
             //up move
             for (i = current.getRow(); i > temp ; i--) {
-                type = board[i][current.getColumn()].getCondition();
+                type = blocks[i][current.getColumn()].getCondition();
                 if (!type.equals(current.getCondition()) && !type.equals(Constants.EMPTY)) {
                     isPossible = false;
                     break;
                 }
             }
             if (isPossible && i==temp) {
-                type = board[i][current.getColumn()].getCondition();
-                moves.add(new Move(current.getCondition(), current, board[temp][current.getColumn()]));
+                type = blocks[i][current.getColumn()].getCondition();
+                moves.add(new Move(current.getCondition(), current, blocks[temp][current.getColumn()]));
             }
         }
         isPossible = true;
@@ -151,15 +147,15 @@ public class GamePlay {
         if (temp < Constants.DIMENSION) {
             //down move
             for (i = current.getRow(); i < temp ; i++) {
-                type = board[i][current.getColumn()].getCondition();
+                type = blocks[i][current.getColumn()].getCondition();
                 if (!type.equals(current.getCondition()) && !type.equals(Constants.EMPTY)) {
                     isPossible = false;
                     break;
                 }
             }
             if (isPossible && i==temp) {
-                type = board[i][current.getColumn()].getCondition();
-                moves.add(new Move(current.getCondition(), current, board[temp][current.getColumn()]));
+                type = blocks[i][current.getColumn()].getCondition();
+                moves.add(new Move(current.getCondition(), current, blocks[temp][current.getColumn()]));
             }
         }
 
@@ -214,13 +210,13 @@ public class GamePlay {
     private void initializeBlack() {
         for (int i = 1; i < Constants.DIMENSION-1; i++) {
 
-            board[0][i].setCondition(Constants.BLACK_TYPE);
-            board[0][i].incrementCheckerCount();
-            black.getBlockList().add(board[0][i]);
+            blocks[0][i].setCondition(Constants.BLACK_TYPE);
+            blocks[0][i].incrementCheckerCount();
+            black.getBlockList().add(blocks[0][i]);
 
-            board[Constants.DIMENSION-1][i].setCondition(Constants.BLACK_TYPE);
-            board[Constants.DIMENSION-1][i].incrementCheckerCount();
-            black.getBlockList().add(board[Constants.DIMENSION-1][i]);
+            blocks[Constants.DIMENSION-1][i].setCondition(Constants.BLACK_TYPE);
+            blocks[Constants.DIMENSION-1][i].incrementCheckerCount();
+            black.getBlockList().add(blocks[Constants.DIMENSION-1][i]);
 
         }
     }
@@ -228,26 +224,26 @@ public class GamePlay {
     private void initializeWhite() {
         for (int i = 1; i < Constants.DIMENSION - 1; i++) {
 
-            board[i][0].setCondition(Constants.WHITE_TYPE);
-            board[i][0].incrementCheckerCount();
-            white.getBlockList().add(board[i][0]);
+            blocks[i][0].setCondition(Constants.WHITE_TYPE);
+            blocks[i][0].incrementCheckerCount();
+            white.getBlockList().add(blocks[i][0]);
 
-            board[i][Constants.DIMENSION-1].setCondition(Constants.WHITE_TYPE);
-            board[i][Constants.DIMENSION-1].incrementCheckerCount();
-            white.getBlockList().add(board[i][Constants.DIMENSION-1]);
+            blocks[i][Constants.DIMENSION-1].setCondition(Constants.WHITE_TYPE);
+            blocks[i][Constants.DIMENSION-1].incrementCheckerCount();
+            white.getBlockList().add(blocks[i][Constants.DIMENSION-1]);
 
         }
     }
 
-    public Block[][] getBoard() {
-        return board;
+    public Block[][] getBlocks() {
+        return blocks;
     }
 
     public void initializeBoard() {
         for (int i = 0; i < Constants.DIMENSION; i++) {
             for (int j = 0; j < Constants.DIMENSION; j++) {
-                board[i][j] = new Block(i,j);
-                board[i][j].setCondition(Constants.EMPTY);
+                blocks[i][j] = new Block(i,j);
+                blocks[i][j].setCondition(Constants.EMPTY);
             }
         }
         initializeLineOfAction();
@@ -258,10 +254,10 @@ public class GamePlay {
     public void initializeLineOfAction() {
         for (int i = 0; i < Constants.DIMENSION; i++) {
             for (int j = 0; j < Constants.DIMENSION; j++) {
-                board[i][j].setHorizontal(gamePlayUtil.getLoa(TypesOfLoa.HORIZONTAL, board[i][j], this));
-                board[i][j].setVertical(gamePlayUtil.getLoa(TypesOfLoa.VERTICAL, board[i][j], this));
-                board[i][j].setLeadingDiagonal(gamePlayUtil.getLoa(TypesOfLoa.LEADING_DIAGONAL, board[i][j], this));
-                board[i][j].setCounterDiagonal(gamePlayUtil.getLoa(TypesOfLoa.COUNTER_DIAGONAL, board[i][j], this));
+                blocks[i][j].setHorizontal(gamePlayUtil.getLoa(TypesOfLoa.HORIZONTAL, blocks[i][j], this));
+                blocks[i][j].setVertical(gamePlayUtil.getLoa(TypesOfLoa.VERTICAL, blocks[i][j], this));
+                blocks[i][j].setLeadingDiagonal(gamePlayUtil.getLoa(TypesOfLoa.LEADING_DIAGONAL, blocks[i][j], this));
+                blocks[i][j].setCounterDiagonal(gamePlayUtil.getLoa(TypesOfLoa.COUNTER_DIAGONAL, blocks[i][j], this));
             }
         }
 
@@ -272,12 +268,12 @@ public class GamePlay {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         GamePlay gamePlay = (GamePlay) o;
-        return Arrays.deepEquals(board, ((GamePlay) o).board);
+        return Arrays.deepEquals(blocks, ((GamePlay) o).blocks);
     }
 
     @Override
     public int hashCode() {
-        return Arrays.deepHashCode(board);
+        return Arrays.deepHashCode(blocks);
     }
 
     public String printBoard() {
@@ -290,8 +286,8 @@ public class GamePlay {
         for (int i = 0; i < Constants.DIMENSION; i++) {
             stringBuilder.append(i).append(" ").append("| ");
             for (int j = 0; j < Constants.DIMENSION; j++) {
-                if (board[i][j].getCondition().equals(Constants.BLACK_TYPE)) stringBuilder.append(Constants.BLACK_TYPE);
-                else if (board[i][j].getCondition().equals(Constants.WHITE_TYPE)) stringBuilder.append(Constants.WHITE_TYPE);
+                if (blocks[i][j].getCondition().equals(Constants.BLACK_TYPE)) stringBuilder.append(Constants.BLACK_TYPE);
+                else if (blocks[i][j].getCondition().equals(Constants.WHITE_TYPE)) stringBuilder.append(Constants.WHITE_TYPE);
                 else stringBuilder.append(Constants.EMPTY);
                 stringBuilder.append(" | ");
             }

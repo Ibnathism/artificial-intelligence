@@ -29,8 +29,8 @@ public class Main {
                     System.out.println("Format : (W/B):row,col:final_row,final_col");
                     input = scanner.next();
                     String playerType = input.split(":")[0];
-                    Block init = game.getBoard()[Integer.parseInt(input.split(":")[1].split(",")[0])][Integer.parseInt(input.split(":")[1].split(",")[1])];
-                    Block next = game.getBoard()[Integer.parseInt(input.split(":")[2].split(",")[0])][Integer.parseInt(input.split(":")[2].split(",")[1])];
+                    Block init = game.getBlocks()[Integer.parseInt(input.split(":")[1].split(",")[0])][Integer.parseInt(input.split(":")[1].split(",")[1])];
+                    Block next = game.getBlocks()[Integer.parseInt(input.split(":")[2].split(",")[0])][Integer.parseInt(input.split(":")[2].split(",")[1])];
                     Move move = new Move(playerType, init, next);
                     ArrayList<Move> possibleMoves = game.getPossibleMoves(init);
                     boolean canMove = game.gameMove(move, possibleMoves);
@@ -42,10 +42,10 @@ public class Main {
                     input = scanner.next();
                     int row = Integer.parseInt(input.split(":")[0]);
                     int col = Integer.parseInt(input.split(":")[1]);
-                    System.out.println("Horizontal : "+ game.getBoard()[row][col].getHorizontal().checkerCount);
-                    System.out.println("Vertical : "+ game.getBoard()[row][col].getVertical().checkerCount);
-                    System.out.println("Leading Diagonal : "+ game.getBoard()[row][col].getLeadingDiagonal().checkerCount);
-                    System.out.println("Counter Diagonal : "+ game.getBoard()[row][col].getCounterDiagonal().checkerCount);
+                    System.out.println("Horizontal : "+ game.getBlocks()[row][col].getHorizontal().checkerCount);
+                    System.out.println("Vertical : "+ game.getBlocks()[row][col].getVertical().checkerCount);
+                    System.out.println("Leading Diagonal : "+ game.getBlocks()[row][col].getLeadingDiagonal().checkerCount);
+                    System.out.println("Counter Diagonal : "+ game.getBlocks()[row][col].getCounterDiagonal().checkerCount);
                     break;
                 case 3:
                     System.out.println(game.printBoard());
@@ -55,7 +55,7 @@ public class Main {
                     input = scanner.next();
                     row = Integer.parseInt(input.split(",")[0]);
                     col = Integer.parseInt(input.split(",")[1]);
-                    possibleMoves = game.getPossibleMoves(game.getBoard()[row][col]);
+                    possibleMoves = game.getPossibleMoves(game.getBlocks()[row][col]);
                     for (Move m: possibleMoves) {
                         System.out.println(m);
                     }
@@ -70,8 +70,8 @@ public class Main {
                     input = scanner.next();
                     playerType = input.split(":")[0];
                     //gameNode = GameNode.copyGame(game);
-                    init = gameNode.getBoard()[Integer.parseInt(input.split(":")[1].split(",")[0])][Integer.parseInt(input.split(":")[1].split(",")[1])];
-                    next = gameNode.getBoard()[Integer.parseInt(input.split(":")[2].split(",")[0])][Integer.parseInt(input.split(":")[2].split(",")[1])];
+                    init = gameNode.getBlocks()[Integer.parseInt(input.split(":")[1].split(",")[0])][Integer.parseInt(input.split(":")[1].split(",")[1])];
+                    next = gameNode.getBlocks()[Integer.parseInt(input.split(":")[2].split(",")[0])][Integer.parseInt(input.split(":")[2].split(",")[1])];
                     move = new Move(playerType, init, next);
                     possibleMoves = gameNode.getPossibleMoves(init);
                     canMove = gameNode.gameMove(move, possibleMoves);

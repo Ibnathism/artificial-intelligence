@@ -8,12 +8,12 @@ public class GameNode {
         Block[][] newGameNodeBlocks = new Block[Constants.DIMENSION][Constants.DIMENSION];
         for (int i = 0; i < Constants.DIMENSION; i++) {
             for (int j = 0; j < Constants.DIMENSION; j++) {
-                Block tempBlock = gamePlay.getBoard()[i][j];
+                Block tempBlock = gamePlay.getBlocks()[i][j];
                 newGameNodeBlocks[i][j] = new Block(tempBlock.getRow(),tempBlock.getColumn());
                 newGameNodeBlocks[i][j].setCondition(tempBlock.getCondition());
             }
         }
-        newGameNode.setBoard(newGameNodeBlocks);
+        newGameNode.setBlocks(newGameNodeBlocks);
         Player white = new Player(Constants.WHITE_TYPE);
         Player black = new Player(Constants.BLACK_TYPE);
         ArrayList<Block> blocksOfWhite = new ArrayList<>();

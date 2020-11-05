@@ -12,7 +12,7 @@ public class GamePlayUtil {
             //System.out.println(type + ": " + loaPoints.toString());
             LineOfAction myLoa = new LineOfAction(type);
             for (Point point: loaPoints) {
-                myLoa.getBoardPositions().add(gamePlay.getBoard()[point.x][point.y]);
+                myLoa.getBoardPositions().add(gamePlay.getBlocks()[point.x][point.y]);
             }
             loaMap.put(loaPoints.toString(), myLoa);
             return myLoa;
