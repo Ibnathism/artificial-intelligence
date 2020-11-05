@@ -10,6 +10,7 @@ public class Player {
         blockList = new ArrayList<>();
     }
 
+
     public List<Block> getBlockList() {
         return blockList;
     }

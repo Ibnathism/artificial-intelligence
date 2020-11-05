@@ -20,6 +20,7 @@ public class Main {
             System.out.println("5. Copy Board");
             System.out.println("6. Move on copied board");
             System.out.println("7. Print copied board");
+            System.out.println("8. Start Playing");
             System.out.println("10. Exit");
 
             choice = scanner.nextInt();
@@ -81,6 +82,10 @@ public class Main {
                 case 7:
                     //gameNode = GameNode.copyGame(game);
                     System.out.println(gameNode);
+                    break;
+                case 8:
+                    game.startPlaying();
+                    break;
                 default:
                     break;
             }
