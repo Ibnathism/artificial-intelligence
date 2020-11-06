@@ -1,7 +1,4 @@
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 public class GameNode {
     public static GamePlay copyGame(GamePlay gamePlay) {
@@ -63,15 +60,30 @@ public class GameNode {
             return minGamePlay;
 
         }
+
+        /*System.out.println("White's turn");
+        ArrayList<GamePlay> possibleMoves = game.getChildren();
+        int min = Integer.MAX_VALUE;
+        GamePlay minGamePlay = null;
+        for (GamePlay gamePlay: possibleMoves) {
+            int miniMax = runMinimaxAlgorithm(gamePlay, Constants.DEPTH, Integer.MIN_VALUE, Integer.MAX_VALUE, true);
+            //System.out.println("  "+ miniMax);
+            if (miniMax<min){
+                min = miniMax;
+                minGamePlay = gamePlay;
+            }
+        }
+        System.out.println(minGamePlay);
+        //this.blocks = minGamePlay.blocks;
+        return minGamePlay;*/
         System.out.println("White's turn");
         Scanner scanner = new Scanner(System.in);
         String input;
-        System.out.println("Format : (W/B):row,col:final_row,final_col");
+        System.out.println("Format : row,col:final_row,final_col");
         input = scanner.next();
-        String playerType = input.split(":")[0];
-        Block init = game.getBlocks()[Integer.parseInt(input.split(":")[1].split(",")[0])][Integer.parseInt(input.split(":")[1].split(",")[1])];
-        Block next = game.getBlocks()[Integer.parseInt(input.split(":")[2].split(",")[0])][Integer.parseInt(input.split(":")[2].split(",")[1])];
-        Move move = new Move(playerType, init, next);
+        Block init = game.getBlocks()[Integer.parseInt(input.split(":")[0].split(",")[0])][Integer.parseInt(input.split(":")[0].split(",")[1])];
+        Block next = game.getBlocks()[Integer.parseInt(input.split(":")[1].split(",")[0])][Integer.parseInt(input.split(":")[1].split(",")[1])];
+        Move move = new Move(Constants.WHITE_TYPE, init, next);
         ArrayList<Move> possibleMoves = game.getPossibleMoves(init);
         boolean canMove = game.gameMove(move, possibleMoves);
         if (canMove) {
@@ -82,11 +94,58 @@ public class GameNode {
         return game;
     }
 
+    private static boolean isWon(Player player) {
+        int count = 1;
+        if (player.getBlockList().size()==1) return true;
+        HashSet<Point> connected = new HashSet<>();
+        connected.add(new Point(player.getBlockList().get(0).getRow(), player.getBlockList().get(0).getColumn()));
+        HashSet<Point> attached = GameNode.getAttached(player.getBlockList().get(0));
+        ArrayList<Block> temp = new ArrayList<>();
 
+        while (count < player.getBlockList().size()) {
+            temp = getConnectedCheckers(player, connected, attached);
+            if (temp.size()==0) return false;
+            count = count + temp.size();
 
-    private static boolean isGameOver(GamePlay gamePlay) {
-        //TODO
-        return false;
+            for (Block block: temp) {
+                Point p = new Point(block.getRow(), block.getColumn());
+                attached.remove(p);
+                connected.add(p);
+                attached.addAll(getAttached(block));
+            }
+        }
+        return true;
+    }
+
+    private static ArrayList<Block> getConnectedCheckers(Player player, HashSet<Point> connected, HashSet<Point> attached) {
+        ArrayList<Block> blocks = new ArrayList<>();
+        for (Block block: player.getBlockList()) {
+            if (!connected.contains(new Point(block.getRow(), block.getColumn())) && attached.contains(new Point(block.getRow(), block.getColumn())))
+                blocks.add(block);
+        }
+        return blocks;
+    }
+
+    private static HashSet<Point> getAttached(Block block) {
+        int row = block.getRow();
+        int col = block.getColumn();
+        boolean condition1 = col-1>=0;
+        boolean condition2 = col+1<Constants.DIMENSION;
+        boolean condition3 = row-1>=0;
+        boolean condition4 = row+1 < Constants.DIMENSION;
+        HashSet<Point> attached = new HashSet<>();
+        if (condition1) attached.add(new Point(row, col-1));
+        if (condition2) attached.add(new Point(row, col+1));
+        if (condition3) attached.add(new Point(row-1, col));
+        if (condition4) attached.add(new Point(row+1, col));
+        if (condition1 && condition3) attached.add(new Point(row-1, col-1));
+        if (condition1 && condition4) attached.add(new Point(row+1, col-1));
+        if (condition2 && condition3) attached.add(new Point(row-1, col+1));
+        if (condition2 && condition4) attached.add(new Point(row+1, col+1));
+        return attached;
+    }
+    private static boolean checkEndGame(GamePlay game){
+        return isWon(game.getBlack()) && isWon(game.getWhite());
     }
 
     public static int getStaticEvaluation(GamePlay gamePlay, Player white, Player black) {
@@ -112,7 +171,7 @@ public class GameNode {
     }
 
     public static int runMinimaxAlgorithm(GamePlay gamePlay, int depth, int alpha, int beta, boolean isMaximizingPlayer) {
-        if (depth == 0 || isGameOver(gamePlay)) {
+        if (depth == 0 || checkEndGame(gamePlay)) {
             //System.out.println("Depth reached");
             return getStaticEvaluation(gamePlay, gamePlay.getWhite(), gamePlay.getBlack());
         }
