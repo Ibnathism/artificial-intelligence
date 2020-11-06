@@ -85,6 +85,9 @@ public class GameNode {
         Block next = game.getBlocks()[Integer.parseInt(input.split(":")[1].split(",")[0])][Integer.parseInt(input.split(":")[1].split(",")[1])];
         Move move = new Move(Constants.WHITE_TYPE, init, next);
         ArrayList<Move> possibleMoves = game.getPossibleMoves(init);
+        for (Move m: possibleMoves) {
+            System.out.println(m);
+        }
         boolean canMove = game.gameMove(move, possibleMoves);
         if (canMove) {
             System.out.println("Move Successful");
@@ -144,7 +147,9 @@ public class GameNode {
         if (condition2 && condition4) attached.add(new Point(row+1, col+1));
         return attached;
     }
-    private static boolean checkEndGame(GamePlay game){
+
+
+    public static boolean checkEndGame(GamePlay game){
         return isWon(game.getBlack()) && isWon(game.getWhite());
     }
 

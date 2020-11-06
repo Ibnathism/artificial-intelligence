@@ -1,3 +1,4 @@
+import javax.swing.plaf.IconUIResource;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -85,10 +86,13 @@ public class Main {
                     break;
                 case 8:
                     boolean isWhitesTurn;
-                    for (int i = 0; i < 10; i++) {
-                        isWhitesTurn = i % 2 != 0;
+                    int count = 0;
+                    //System.out.println(GameNode.checkEndGame(game));
+                    while (!GameNode.checkEndGame(game)) {
+                        isWhitesTurn = count % 2 != 0;
                         gameNode = GameNode.copyGame(game);
                         game = GameNode.startPlaying(isWhitesTurn, gameNode);
+                        count++;
                     }
 
                     break;
