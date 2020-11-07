@@ -104,6 +104,7 @@ public class Main {
                             isWhitesTurn = true;
                         }
                     }
+                    System.out.println("Game Over");
                     break;
                 case 6:
                     while (!GameNode.checkEndGame(game)) {
@@ -112,6 +113,7 @@ public class Main {
                         game = GameNode.startPlaying(isWhitesTurn, gameNode);
                         count++;
                     }
+                    System.out.println("Game Over");
                     break;
 
                 default:

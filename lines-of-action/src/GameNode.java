@@ -150,7 +150,7 @@ public class GameNode {
 
 
     public static boolean checkEndGame(GamePlay game){
-        return isWon(game.getBlack()) && isWon(game.getWhite());
+        return isWon(game.getBlack()) || isWon(game.getWhite());
     }
 
     public static int getDepth(Player player) {
