@@ -48,7 +48,7 @@ public class GameNode {
             int min = Integer.MAX_VALUE;
             GamePlay minGamePlay = null;
             for (GamePlay gamePlay: possibleMoves) {
-                int miniMax = runMinimaxAlgorithm(gamePlay, Constants.DEPTH, Integer.MIN_VALUE, Integer.MAX_VALUE, false);
+                int miniMax = runMinimaxAlgorithm(gamePlay, getDepth(gamePlay.getBlack()), Integer.MIN_VALUE, Integer.MAX_VALUE, false);
                 //System.out.println("  "+ miniMax);
                 if (miniMax<min){
                     min = miniMax;
@@ -153,22 +153,41 @@ public class GameNode {
         return isWon(game.getBlack()) && isWon(game.getWhite());
     }
 
-    public static int getStaticEvaluation(GamePlay gamePlay) {
-        return getMobilityHeu(gamePlay);
+    public static int getDepth(Player player) {
+        int d = (int) Math.ceil(Constants.DEPTH - (Math.log(player.getBlockList().size())/Math.log(2)));
+
+        if (d == 0) return 1;
+        return d;
     }
 
-    /*public static int getAreaHue(GamePlay gamePlay) {
-        int whiteSum = 0;
-        int blackSum = 0;
+    public static int getStaticEvaluation(GamePlay gamePlay) {
+        return 4*getPieceSquareTableHue(gamePlay)+getAreaHeuristic(gamePlay)+2*getMobilityHeu(gamePlay);
+    }
 
-        for (Block block: gamePlay.getBlack().getBlockList()) {
 
+    public static int getAreaHeuristic(GamePlay gamePlay) {
+        return getArea(gamePlay.getWhite()) - getArea(gamePlay.getBlack());
+    }
+    public static int getArea(Player player) {
+        int rowX = Integer.MIN_VALUE;
+        int colMax = Integer.MIN_VALUE;
+        int rowN = Integer.MAX_VALUE;
+        int colN = Integer.MAX_VALUE;
+        Point vector1, vector2;
+
+        for (Block block: player.getBlockList()) {
+            if (block.getRow()>rowX) rowX = block.getRow();
+            if (block.getColumn()>colMax) colMax = block.getColumn();
+            if (block.getRow()<rowN) rowN = block.getRow();
+            if (block.getColumn()<colN) colN = block.getColumn();
         }
-        for (Block block: gamePlay.getWhite().getBlockList()) {
-
-        }
-        return whiteSum - blackSum;
-    }*/
+        Point A = new Point(rowN, colN);
+        Point B = new Point(rowX, colN);
+        Point C = new Point(rowX, colMax);
+        vector1 = new Point(C.x-B.x, C.y-B.y);
+        vector2 = new Point(A.x-B.x, A.y-B.y);
+        return (vector1.x * vector2.y) - (vector1.y * vector2.x);
+    }
 
 
 
