@@ -103,7 +103,7 @@ public class GameNode {
         HashSet<Point> connected = new HashSet<>();
         connected.add(new Point(player.getBlockList().get(0).getRow(), player.getBlockList().get(0).getColumn()));
         HashSet<Point> attached = GameNode.getAttached(player.getBlockList().get(0));
-        ArrayList<Block> temp = new ArrayList<>();
+        ArrayList<Block> temp;
 
         while (count < player.getBlockList().size()) {
             temp = getConnectedCheckers(player, connected, attached);
@@ -153,8 +153,26 @@ public class GameNode {
         return isWon(game.getBlack()) && isWon(game.getWhite());
     }
 
-    public static int getStaticEvaluation(GamePlay gamePlay, Player white, Player black) {
-        //TODO improvement
+    public static int getStaticEvaluation(GamePlay gamePlay) {
+        return getMobilityHeu(gamePlay);
+    }
+
+    /*public static int getAreaHue(GamePlay gamePlay) {
+        int whiteSum = 0;
+        int blackSum = 0;
+
+        for (Block block: gamePlay.getBlack().getBlockList()) {
+
+        }
+        for (Block block: gamePlay.getWhite().getBlockList()) {
+
+        }
+        return whiteSum - blackSum;
+    }*/
+
+
+
+    public static int getPieceSquareTableHue(GamePlay gamePlay) {
         int[][] val = {{-80, -25, -20, -20, -20, -20, -25, -80},
                 {-25,  10,  10,  10,  10,  10,  10,  -25},
                 {-20,  10,  25,  25,  25,  25,  10,  -20},
@@ -163,22 +181,36 @@ public class GameNode {
                 {-20,  10,  25,  25,  25,  25,  10,  -20},
                 {-25,  10,  10,  10,  10,  10,  10,  -25},
                 {-80, -25, -20, -20, -20, -20, -25, -80}};
-        int se = 0;
         int whiteSum = 0;
         int blackSum = 0;
-        for (Block block:black.getBlockList()) {
+        for (Block block:gamePlay.getBlack().getBlockList()) {
             blackSum = blackSum + val[block.getRow()][block.getColumn()];
         }
-        for (Block block:white.getBlockList()) {
+        for (Block block:gamePlay.getWhite().getBlockList()) {
             whiteSum = whiteSum + val[block.getRow()][block.getColumn()];
         }
         return whiteSum - blackSum;
     }
 
+    public static int getMobilityHeu(GamePlay gamePlay) {
+        int whiteSum = 0;
+        int blackSum = 0;
+        for (Block block: gamePlay.getBlack().getBlockList()) {
+            ArrayList<Move> possMoves = gamePlay.getPossibleMoves(block);
+            blackSum = blackSum + possMoves.size();
+        }
+        for (Block block: gamePlay.getWhite().getBlockList()) {
+            ArrayList<Move> possMoves = gamePlay.getPossibleMoves(block);
+            whiteSum = whiteSum + possMoves.size();
+        }
+        return whiteSum - blackSum;
+    }
+
+
     public static int runMinimaxAlgorithm(GamePlay gamePlay, int depth, int alpha, int beta, boolean isMaximizingPlayer) {
         if (depth == 0 || checkEndGame(gamePlay)) {
             //System.out.println("Depth reached");
-            return getStaticEvaluation(gamePlay, gamePlay.getWhite(), gamePlay.getBlack());
+            return getStaticEvaluation(gamePlay);
         }
         int eval;
         if (isMaximizingPlayer) {

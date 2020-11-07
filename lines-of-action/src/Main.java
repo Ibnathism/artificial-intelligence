@@ -22,6 +22,7 @@ public class Main {
             System.out.println("6. Move on copied board");
             System.out.println("7. Print copied board");
             System.out.println("8. Start Playing");
+            System.out.println("9. Checker count of copied board");
             System.out.println("10. Exit");
 
             choice = scanner.nextInt();
@@ -40,10 +41,10 @@ public class Main {
                     else System.out.println("Invalid Move");
                     break;
                 case 2:
-                    System.out.println("Format : row:col");
+                    System.out.println("row,col");
                     input = scanner.next();
-                    int row = Integer.parseInt(input.split(":")[0]);
-                    int col = Integer.parseInt(input.split(":")[1]);
+                    int row = Integer.parseInt(input.split(",")[0]);
+                    int col = Integer.parseInt(input.split(",")[1]);
                     System.out.println("Horizontal : "+ game.getBlocks()[row][col].getHorizontal().checkerCount);
                     System.out.println("Vertical : "+ game.getBlocks()[row][col].getVertical().checkerCount);
                     System.out.println("Leading Diagonal : "+ game.getBlocks()[row][col].getLeadingDiagonal().checkerCount);
@@ -53,7 +54,7 @@ public class Main {
                     System.out.println(game);
                     break;
                 case 4:
-                    System.out.println("Format : row,col");
+                    System.out.println("row,col");
                     input = scanner.next();
                     row = Integer.parseInt(input.split(",")[0]);
                     col = Integer.parseInt(input.split(",")[1]);
@@ -68,7 +69,7 @@ public class Main {
                     System.out.println(gameNode);
                     break;
                 case 6:
-                    System.out.println("Format : (W/B):row,col:final_row,final_col");
+                    System.out.println("(W/B):row,col:final_row,final_col");
                     input = scanner.next();
                     playerType = input.split(":")[0];
                     //gameNode = GameNode.copyGame(game);
@@ -91,10 +92,20 @@ public class Main {
                     while (!GameNode.checkEndGame(game)) {
                         isWhitesTurn = count % 2 != 0;
                         gameNode = GameNode.copyGame(game);
+                        //System.out.println("GameNode \n"+gameNode);
                         game = GameNode.startPlaying(isWhitesTurn, gameNode);
                         count++;
                     }
-
+                    break;
+                case 9:
+                    System.out.println("row,col");
+                    input = scanner.next();
+                    row = Integer.parseInt(input.split(",")[0]);
+                    col = Integer.parseInt(input.split(",")[1]);
+                    System.out.println("Horizontal : "+ gameNode.getBlocks()[row][col].getHorizontal().checkerCount);
+                    System.out.println("Vertical : "+ gameNode.getBlocks()[row][col].getVertical().checkerCount);
+                    System.out.println("Leading Diagonal : "+ gameNode.getBlocks()[row][col].getLeadingDiagonal().checkerCount);
+                    System.out.println("Counter Diagonal : "+ gameNode.getBlocks()[row][col].getCounterDiagonal().checkerCount);
                     break;
                 default:
                     break;
