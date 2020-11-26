@@ -7,22 +7,25 @@ public class Possible {
         return permutations;
     }
 
-    public ArrayList<String> getPossibles(ArrayList<Integer> list) {
-        String str = list.toString();
-        getPermutation(str, 0, str.length()-1);
-        return permutations;
+    public void getPossibles(ArrayList<Integer> list) {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (Integer i: list) {
+            stringBuilder.append(i);
+        }
+        getPermutation(stringBuilder.toString(), 0, stringBuilder.length()-1);
     }
     private void getPermutation(String str, int l, int r) {
+        String temp = str;
         if (l == r)
         {
-            permutations.add(str);
-            System.out.println(str);
+            permutations.add(temp);
+            //System.out.println(str);
         }
         else {
             for (int i = l; i <= r; i++) {
-                str = swap(str, l, i);
-                getPermutation(str, l + 1, r);
-                str = swap(str, l, i);
+                temp = swap(temp, l, i);
+                getPermutation(temp, l + 1, r);
+                temp = swap(temp, l, i);
             }
         }
     }
@@ -34,4 +37,6 @@ public class Possible {
         charArray[j] = temp;
         return String.valueOf(charArray);
     }
+
+
 }

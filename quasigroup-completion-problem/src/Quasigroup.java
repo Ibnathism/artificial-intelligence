@@ -1,23 +1,21 @@
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashSet;
-import java.util.List;
 
 public class Quasigroup {
     private ArrayList<HashSet<Integer>> columnData;
 
-    public Quasigroup(ArrayList<ArrayList<Integer>> array) {
+    public Quasigroup() {
         columnData = new ArrayList<>();
     }
 
     public void qGroupCompletion(ArrayList<ArrayList<Integer>> quasigroup) {
-        int dimention = quasigroup.size();
+        int dimension = quasigroup.size();
 
-        for (int i = 0; i < dimention; i++) {
+        for (int i = 0; i < dimension; i++) {
             columnData.add(new HashSet<>());
         }
-        for (int i = 0; i < dimention; i++) {
-            for (int j = 0; j < dimention; j++) {
+        for (int i = 0; i < dimension; i++) {
+            for (int j = 0; j < dimension; j++) {
                 int temp = quasigroup.get(i).get(j);
                 if (temp != -1) columnData.get(i).add(temp);
             }
@@ -31,34 +29,48 @@ public class Quasigroup {
         ArrayList<Integer> nextRow = null;
         int next = -1;
         for (int i = 0; i < quasigroup.size(); i++) {
-            if (quasigroup.get(i).contains(-1)) {
+            if (quasigroup.get(i).contains(0)) {
                 nextRow = quasigroup.get(i);
                 next = i;
                 break;
             }
         }
+        //System.out.println(nextRow);
         if (nextRow!=null) {
             ArrayList<Integer> others = getOthers(next, quasigroup);
             Possible possible = new Possible();
-            ArrayList<String> permutations = possible.getPossibles(others);
+            possible.getPossibles(others);
+            ArrayList<String> permutations = possible.getPermutations();
             for (String perm : permutations) {
                 ArrayList<ArrayList<Integer>> tempQuasi = getTempQuasi(quasigroup);
-                //if (possiblePerm(next, tempQuasi, perm))
+                //System.out.println("TempQuasi = ");
+                //printQ(tempQuasi);
+                if (possiblePerm(next, tempQuasi, perm)) {
+                    //System.out.println("TempQuasi = ");
+                    //printQ(tempQuasi);
+                    runCSP(tempQuasi);
+                }
             }
 
+        }
+        else {
+            System.out.println("Solved");
+            //printQ(quasigroup);
         }
     }
 
     private boolean possiblePerm(int next, ArrayList<ArrayList<Integer>> tempQuasi, String perm) {
-        /*int val = 0;
-        StringBuilder sb = new StringBuilder(perm);
-
-        for (int i = 0; i < tempQuasi.size(); i++) {
+        int val = 0;
+        System.out.println(perm);
+        for (int i = 0; i < perm.length(); i++) {
             if (tempQuasi.get(next).get(i) == 0) {
-                //int c = Integer.parseInt()
+                int c = Integer.parseInt(String.valueOf(perm.charAt(val)));
+                if (columnData.get(i).contains(c)) return false;
+                tempQuasi.get(next).add(i, c);
+                val++;
             }
-        }*/
-        return false;
+        }
+        return true;
     }
 
     private ArrayList<ArrayList<Integer>> getTempQuasi(ArrayList<ArrayList<Integer>> quasigroup) {
@@ -83,6 +95,11 @@ public class Quasigroup {
         return temp;
     }
 
+    public void printQ(ArrayList<ArrayList<Integer>> q){
+        for (int i = 0; i < q.size(); i++) {
+            System.out.println(q.get(i));
+        }
+    }
 
 
 }
