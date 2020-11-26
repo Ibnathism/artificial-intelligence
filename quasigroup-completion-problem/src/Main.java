@@ -9,7 +9,7 @@ public class Main {
             q.add(new ArrayList<>());
         }
         //int[][] array = {{1,0,0,4},{0,0,2,0},{3,0,1,0},{0,3,0,0}};
-        int[][] array = {{0,1,0,0},{0,0,0,0},{0,0,0,0},{0,0,0,0}};
+        int[][] array = {{0,0,0,0},{0,0,0,0},{0,0,0,0},{0,0,0,0}};
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
                 q.get(i).add(array[i][j]);

@@ -48,7 +48,7 @@ public class Quasigroup {
         ArrayList<Integer> nextRow = new ArrayList<>();
         if (next!=-1) nextRow = quasigroup.get(next);
 
-        setColumns(quasigroup);
+        //setColumns(quasigroup);
 
         //System.out.println("Next Row "+nextRow);
         if (nextRow!=null && next!=-1) {
@@ -78,6 +78,7 @@ public class Quasigroup {
 
     private boolean possiblePerm(int next, ArrayList<ArrayList<Integer>> tempQuasi, String perm) {
         int val = 0;
+        setColumns(tempQuasi);
         for (int i = 0; i < tempQuasi.size(); i++) {
             if (tempQuasi.get(next).get(i) == 0) {
                 int c = Integer.parseInt(String.valueOf(perm.charAt(val)));
