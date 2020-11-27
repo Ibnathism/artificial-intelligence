@@ -6,9 +6,9 @@ public class Main {
 	// write your code here
         ArrayList<ArrayList<Integer>> q = new ArrayList<>();
         //int[][] array = {{1,0,0,4},{0,0,2,0},{3,0,1,0},{0,3,0,0}};
-        //int[][] array = {{0,0,0,0},{0,0,0,0},{0,0,0,0},{0,0,0,0}};
+        int[][] array = {{0,0,0,0},{0,0,0,0},{0,0,0,0},{0,0,0,0}};
         //int[][] array = {{0,0,0},{0,0,0},{0,0,0}};
-        int[][] array = {{0,0,0,0,0},{0,0,0,0,0},{0,0,0,0,0},{0,0,0,0,0},{0,0,0,0,0}};
+        //int[][] array = {{0,0,0,0,0},{0,0,0,0,0},{0,0,0,0,0},{0,0,0,0,0},{0,0,0,0,0}};
         for (int i = 0; i < array.length; i++) {
             q.add(new ArrayList<>());
         }
@@ -26,13 +26,12 @@ public class Main {
 
 
         /** Permutation Test
-        //String str = "435";
         ArrayList<Integer> list = new ArrayList<>();
         list.add(4);
         list.add(5);
         list.add(3);
         Possible possible = new Possible();
         possible.getPossibles(list);
-        //System.out.println(possible.getPermutations());*/
+        System.out.println(possible.getPermutations());*/
     }
 }

@@ -3,11 +3,6 @@ import java.util.HashSet;
 
 public class Quasigroup {
     private int count = 0;
-    //private ArrayList<HashSet<Integer>> columnData;
-
-    //public Quasigroup() {
-        //columnData = new ArrayList<>();
-    //}
 
     private ArrayList<HashSet<Integer>> getColumnData(ArrayList<ArrayList<Integer>> quasigroup) {
         int dimension = quasigroup.size();
@@ -58,10 +53,11 @@ public class Quasigroup {
             ArrayList<Integer> others = getOthers(next, quasigroup);
             //System.out.println("Others "+others);
             Possible possible = new Possible();
-            possible.getPossibles(others);
-            ArrayList<String> permutations = possible.getPermutations();
+            assert others!=null;
+            possible.countAllPossible(others, 0, others.size()-1);
+            ArrayList<ArrayList<Integer>> permutations = possible.getPermutations();
             //System.out.println("Permutations "+permutations);
-            for (String perm : permutations) {
+            for (ArrayList<Integer> perm : permutations) {
                 ArrayList<ArrayList<Integer>> tempQuasi = getTempQuasi(quasigroup);
                 ArrayList<HashSet<Integer>> columnData = getColumnData(tempQuasi);
                 //System.out.println("TempQuasi = ");
@@ -82,12 +78,13 @@ public class Quasigroup {
         }
     }
 
-    private boolean possiblePerm(int next, ArrayList<ArrayList<Integer>> tempQuasi, String perm, ArrayList<HashSet<Integer>> columnData) {
+    private boolean possiblePerm(int next, ArrayList<ArrayList<Integer>> tempQuasi, ArrayList<Integer> perm, ArrayList<HashSet<Integer>> columnData) {
         int val = 0;
         //getColumnData(tempQuasi);
         for (int i = 0; i < tempQuasi.size(); i++) {
             if (tempQuasi.get(next).get(i) == 0) {
-                int c = Integer.parseInt(String.valueOf(perm.charAt(val)));
+                //int c = Integer.parseInt(String.valueOf(perm.charAt(val)));
+                int c = perm.get(val);
                 if (columnData.get(i).contains(c)) return false;
                 tempQuasi.get(next).set(i, c);
                 //printQ(tempQuasi);

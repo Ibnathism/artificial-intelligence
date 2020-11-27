@@ -1,21 +1,17 @@
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class Possible {
-    private ArrayList<String> permutations = new ArrayList<>();
+    private ArrayList<ArrayList<Integer>> permutations = new ArrayList<>();
 
-    public ArrayList<String> getPermutations() {
+
+    public ArrayList<ArrayList<Integer>> getPermutations() {
         return permutations;
     }
 
-    public void getPossibles(ArrayList<Integer> list) {
-        StringBuilder stringBuilder = new StringBuilder();
-        for (Integer i: list) {
-            stringBuilder.append(i);
-        }
-        getPermutation(stringBuilder.toString(), 0, stringBuilder.length()-1);
-    }
-    private void getPermutation(String str, int l, int r) {
-        String temp = str;
+    public void countAllPossible(ArrayList<Integer> list, int l, int r) {
+        ArrayList<Integer> temp = list;
         if (l == r)
         {
             permutations.add(temp);
@@ -24,18 +20,18 @@ public class Possible {
         else {
             for (int i = l; i <= r; i++) {
                 temp = swap(temp, l, i);
-                getPermutation(temp, l + 1, r);
+                countAllPossible(temp, l + 1, r);
                 temp = swap(temp, l, i);
             }
         }
     }
-    private String swap(String a, int i, int j) {
-        char temp;
-        char[] charArray = a.toCharArray();
-        temp = charArray[i];
-        charArray[i] = charArray[j];
-        charArray[j] = temp;
-        return String.valueOf(charArray);
+    private ArrayList<Integer> swap(ArrayList<Integer> temp, int i, int j) {
+        ArrayList<Integer> newArr = new ArrayList<>(temp);
+        int a1 = temp.get(i);
+        int a2 = temp.get(j);
+        newArr.set(i, a2);
+        newArr.set(j, a1);
+        return newArr;
     }
 
 
