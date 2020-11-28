@@ -38,9 +38,11 @@ public class MatrixRow {
         for (int col = 0; col < row.size(); col++) {
             int temp = myQuasiGroup.get(index).get(col);
             if (temp != 0) continue;
-            dynamicDeg = dynamicDeg + 2*row.size() - rowData.size() - columnData.size();
+            dynamicDeg = dynamicDeg + 2*row.size() - rowData.get(index).size() - columnData.get(col).size();
         }
         return dynamicDeg;
     }
+
+
 
 }
