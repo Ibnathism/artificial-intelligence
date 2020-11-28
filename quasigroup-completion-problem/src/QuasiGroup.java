@@ -11,10 +11,18 @@ class SmallestDomainComparator implements Comparator<MatrixRow> {
     }
 }
 
-public class QuasiGroup {
-    private int count = 0;
+class MaxDynamicDegreeComparator implements Comparator<MatrixRow> {
+    @Override
+    public int compare(MatrixRow matrixRow, MatrixRow t1) {
+        return Integer.compare(t1.getDynamicDegree(), matrixRow.getDynamicDegree());
+    }
+}
 
-    private int findRowID(ArrayList<ArrayList<Integer>> quasigroup) {
+public class QuasiGroup {
+    //private int count = 0;
+    private boolean foundSolution = false;
+
+    private int findRowSmallestDomain(ArrayList<ArrayList<Integer>> quasigroup) {
         PriorityQueue<MatrixRow> pq = new PriorityQueue<>(quasigroup.size(), new SmallestDomainComparator());
         for (int i = 0; i < quasigroup.size(); i++) {
             if (quasigroup.get(i).contains(0)) {
@@ -30,30 +38,62 @@ public class QuasiGroup {
         return nextRow.getIndex();
     }
 
-    void runCSP(ArrayList<ArrayList<Integer>> quasigroup) {
-        int next = findRowID(quasigroup);
-        ArrayList<Integer> nextRow = new ArrayList<>();
-        if (next!=-1) nextRow = quasigroup.get(next);
-        if (nextRow!=null && next!=-1) {
-            ArrayList<Integer> others = getOthers(next, quasigroup);
-            Possible possible = new Possible();
-            assert others!=null;
-            possible.countAllPossible(others, 0, others.size()-1);
-            ArrayList<ArrayList<Integer>> permutations = possible.getPermutations();
-            for (ArrayList<Integer> perm : permutations) {
-                ArrayList<ArrayList<Integer>> tempQuasi = getTempQuasi(quasigroup);
-                ArrayList<HashSet<Integer>> columnData = Functions.getColumnData(tempQuasi);
-                if (possiblePerm(next, tempQuasi, perm, columnData)) {
-                    runCSP(tempQuasi);
-                }
+    private int findRowID(ArrayList<ArrayList<Integer>> quasigroup) {
+        int next = -1;
+        for (int i = 0; i < quasigroup.size(); i++) {
+            if (quasigroup.get(i).contains(0)) {
+                next = i;
+                return next;
             }
         }
-        else {
-            System.out.println("Solved");
-            count++;
-            printQ(quasigroup);
-            System.out.println("Count " + count);
+        return next;
+    }
+
+    private int findRowMaxDynamicDegree(ArrayList<ArrayList<Integer>> quasiGroup) {
+        PriorityQueue<MatrixRow> pq = new PriorityQueue<>(quasiGroup.size(), new MaxDynamicDegreeComparator());
+        for (int i = 0; i < quasiGroup.size(); i++) {
+            if (quasiGroup.get(i).contains(0)){
+                MatrixRow temp = new MatrixRow(i, quasiGroup, Functions.getRowData(quasiGroup), Functions.getColumnData(quasiGroup));
+                pq.add(temp);
+            }
         }
+        if (pq.isEmpty()) return -1;
+        MatrixRow nextRow = pq.poll();
+
+        return nextRow.getIndex();
+    }
+
+
+    void runCSP(ArrayList<ArrayList<Integer>> quasigroup) {
+        //int next = findRowID(quasigroup);
+        int next = findRowSmallestDomain(quasigroup);
+        //int next = findRowMaxDynamicDegree(quasigroup);
+        ArrayList<Integer> nextRow = new ArrayList<>();
+        if (next!=-1) nextRow = quasigroup.get(next);
+        if (!foundSolution){
+            if (nextRow!=null && next!=-1) {
+                ArrayList<Integer> others = getOthers(next, quasigroup);
+                Possible possible = new Possible();
+                assert others!=null;
+                possible.countAllPossible(others, 0, others.size()-1);
+                ArrayList<ArrayList<Integer>> permutations = possible.getPermutations();
+                for (ArrayList<Integer> perm : permutations) {
+                    ArrayList<ArrayList<Integer>> tempQuasi = getTempQuasi(quasigroup);
+                    ArrayList<HashSet<Integer>> columnData = Functions.getColumnData(tempQuasi);
+                    if (possiblePerm(next, tempQuasi, perm, columnData)) {
+                        runCSP(tempQuasi);
+                    }
+                }
+            }
+            else {
+                System.out.println("Solved");
+                //count++;
+                printQ(quasigroup);
+                //System.out.println("Count " + count);
+                foundSolution = true;
+            }
+        }
+
     }
 
     private boolean possiblePerm(int next, ArrayList<ArrayList<Integer>> tempQuasi, ArrayList<Integer> perm, ArrayList<HashSet<Integer>> columnData) {

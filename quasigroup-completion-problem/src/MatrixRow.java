@@ -32,4 +32,15 @@ public class MatrixRow {
         return domain;
     }
 
+    public int getDynamicDegree() {
+        int dynamicDeg = 0;
+        ArrayList<Integer> row = myQuasiGroup.get(index);
+        for (int col = 0; col < row.size(); col++) {
+            int temp = myQuasiGroup.get(index).get(col);
+            if (temp != 0) continue;
+            dynamicDeg = dynamicDeg + 2*row.size() - rowData.size() - columnData.size();
+        }
+        return dynamicDeg;
+    }
+
 }
