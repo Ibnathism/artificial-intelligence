@@ -3,7 +3,6 @@ import java.util.Comparator;
 import java.util.HashSet;
 import java.util.PriorityQueue;
 
-
 class SmallestDomainComparator implements Comparator<MatrixRow> {
     @Override
     public int compare(MatrixRow row, MatrixRow t1) {
@@ -14,14 +13,15 @@ class SmallestDomainComparator implements Comparator<MatrixRow> {
 class MaxDynamicDegreeComparator implements Comparator<MatrixRow> {
     @Override
     public int compare(MatrixRow matrixRow, MatrixRow t1) {
-        return Integer.compare(matrixRow.getDynamicDegree(), t1.getDynamicDegree());
+        return Integer.compare(t1.getDynamicDegree(), matrixRow.getDynamicDegree());
     }
 }
+
 class BrelazComparator implements Comparator<MatrixRow> {
     @Override
     public int compare(MatrixRow matrixRow, MatrixRow t1) {
         if (matrixRow.getDomain()!=t1.getDomain()) return Integer.compare(matrixRow.getDomain(), t1.getDomain());
-        else return Integer.compare(matrixRow.getDynamicDegree(), t1.getDynamicDegree());
+        else return Integer.compare(t1.getDynamicDegree(), matrixRow.getDynamicDegree());
     }
 }
 
@@ -82,7 +82,6 @@ public class QuasiGroup {
 
         return nextRow.getIndex();
     }
-
 
     void runCSP(ArrayList<ArrayList<Integer>> quasigroup) {
         nodeCount++;
@@ -165,6 +164,4 @@ public class QuasiGroup {
             System.out.println(q.get(i));
         }
     }
-
-
 }
